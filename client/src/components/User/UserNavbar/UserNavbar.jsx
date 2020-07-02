@@ -1,12 +1,10 @@
 import React from "react";
-import "./Navbar.css";
+import "./UserNavbar.css";
 import $ from "jquery";
-import CreateButton from "../CreateButton/CreateButton.jsx";
-import DeleteButton from "../DeleteButton/DeleteButton.jsx";
-import CohortsButton from "../CohortsButton/CohortsButton.jsx";
+import UserProfile from "../UserProfile/UserProfile.jsx";
+import CohortButton from "../CohortButton/CohortButton.jsx";
 import ChatRoomButton from "../ChatRoomButton/ChatRoomButton.jsx";
-
-class Navbar extends React.Component {
+class UserNavbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -53,9 +51,7 @@ class Navbar extends React.Component {
             <img src="./rbk2.png" id="rbkLogo" />
           </center>
           <div id="buttonsBox">
-            <CreateButton />
-            <DeleteButton />
-            <CohortsButton />
+            <CohortButton />
             <ChatRoomButton />
           </div>
         </div>
@@ -64,4 +60,4 @@ class Navbar extends React.Component {
     );
   }
 }
-export default Navbar;
+export default UserNavbar;

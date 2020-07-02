@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "./UserProfile.css";
+import Calendar from "../Calendar/Calendar.jsx";
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +14,9 @@ class UserProfile extends React.Component {
     for (let i = 0; i < this.props.profiles.length; i++) {
       if (this.props.profiles[i].fullName === this.props.fullName) {
         const currentProfile = this.props.profiles[i];
+        if (currentProfile.Gender === "Female") {
+          this.setState({ image: "./female.jpg" });
+        }
         this.setState({ profile: currentProfile });
       }
     }
@@ -27,16 +31,14 @@ class UserProfile extends React.Component {
             </Col>
             <Col className="profile" sm="10">
               <p>FullName: {this.state.profile.fullName}</p>
-              <p>Gender: Male</p>
+              <p>Gender: {this.state.profile.Gender}</p>
               <p>Cohort: {this.state.profile.cohort} </p>
               <p> Role: {this.state.profile.role} </p>
               <p> E-mail: {this.state.profile.email} </p>
             </Col>
           </Row>
           <Row>
-            <Col className="info" sm="12">
-              INFORMATIONS
-            </Col>
+            <Col className="info" sm="12"></Col>
           </Row>
         </Container>
       </div>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDom from "react-dom";
 import "./CreateCohort.css";
 class CreateCohort extends React.Component {
   constructor(props) {
@@ -16,6 +17,8 @@ class CreateCohort extends React.Component {
     }).then((data) => {
       data.json();
     });
+    ReactDOM.unmountComponentAtNode(document.getElementById("app"));
+    ReactDOM.render(<App />, document.getElementById("app"));
   }
   // checkforCohort(newCohortNumber) {
   //   const { data } = this.state;

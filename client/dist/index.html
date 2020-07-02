@@ -1,11 +1,34 @@
 <!DOCTYPE html>
   <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>RBK-Platform</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+    />
+    <!-- https://fonts.google.com/ -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <!-- https://getbootstrap.com/ -->
+    <link href="fontawesome/css/all.min.css" rel="stylesheet" />
+    <!-- https://fontawesome.com/ -->
+    <link href="css/templatemo-business-oriented.css" rel="stylesheet" />
     <title>RBK-Platform</title>
   </head>
   <body>
     <div id="app"></div>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/parallax.min.js"></script>
+    <script src="js/tooplate-script.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#parallax-1").parallax({ imageSrc: "rbk.jpg" });
+        $("#parallax-2").parallax({ imageSrc: "rbk.jpg" });
+      });
+    </script>
     <script type="text/javascript" src="./bundle.js"></script>
   </body>
 </html>

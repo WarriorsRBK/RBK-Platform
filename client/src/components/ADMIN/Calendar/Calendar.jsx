@@ -18,34 +18,29 @@ class Calendar extends React.Component {
     this.state = {
       value: "",
       todos: [],
-      colors: true
+      colors: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.clearList = this.clearList.bind(this);
-    
   }
 
   handleChange(event) {
     this.setState({ value: event.target.value });
-    
   }
 
   handleSubmit(event) {
     event.preventDefault();
-   
+
     const todo = {
       value: this.state.value,
     };
-    console.log("hi");
 
     axios.post(`/calendar`, todo).then((res) => {
-      console.log(res);
       this.setState({ todos: res.data });
     });
-    
   }
 
   componentWillMount() {
@@ -57,11 +52,9 @@ class Calendar extends React.Component {
   }
 
   deleteItem(id) {
-    console.log(id);
     const todoos = this.state.todos.filter((todo) => {
       return todo["_id"] !== id;
     });
-    console.log(todoos);
     this.setState({
       todos: todoos,
     });
@@ -88,15 +81,12 @@ class Calendar extends React.Component {
     });
   }
 
-
-
   render() {
     if (this.state.todos.length === 0) {
       $("#todosID").hide();
     } else {
       $("#todosID").show();
     }
-    console.log(this.state);
     return (
       <div style={{ textAlign: "center" }}>
         <form onSubmit={this.handleSubmit} className="form-horizontal">
@@ -114,7 +104,6 @@ class Calendar extends React.Component {
               onChange={this.handleChange}
               icon="pencil-alt"
               rows="2"
-              
             />
           </label>
           <input
@@ -143,8 +132,7 @@ class Calendar extends React.Component {
                 style={{ textAlign: "center", position: "relative" }}
               >
                 <MDBListGroupItem
-                
-                  color='primary'
+                  color="secondary"
                   key={todo["_id"]}
                   className="my-4 mx-4"
                   style={{ listStyleType: "none" }}
@@ -176,7 +164,5 @@ class Calendar extends React.Component {
     );
   }
 }
-
-
 
 export default Calendar;

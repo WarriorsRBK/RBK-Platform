@@ -4,6 +4,8 @@ html {
   height: 100%;
   width: 100%;
   overflow: hidden;
+}
+body {
   background-image: url("./bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -11,7 +13,7 @@ html {
 #interface {
   margin: auto;
   position: relative;
-  width: 60%;
+  width: 80%;
   top: 20%;
   left: 10%;
   height: 100vh;

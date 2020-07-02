@@ -21,7 +21,9 @@
 }
 #profilecontainer {
   margin: auto;
+  width: 70%;
   top: 20%;
+  left: -20%;
   position: relative;
   padding: 10px;
 }
