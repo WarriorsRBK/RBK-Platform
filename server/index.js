@@ -1,9 +1,7 @@
+const bcrypt = require("bcrypt");
 const express = require("express");
 const http = require("http");
-// console.log(process.env.ACCESS_TOKEN_SECRET);
-
 const cors = require("cors");
-
 const app = express();
 const router = express.Router();
 const PORT = process.env.PORT || 3000;
@@ -36,10 +34,32 @@ app.post("/DeleteUser", (req, res) => {
     else console.log(data);
   });
 });
-app.post("/UserCreation", (req, res) => {
-  const User = database.RBK;
-  User.create(req.body);
+
+app.post("/UserCreation", async (req, res) => {
+  var User = database.RBK;
+  password = req.body[0].password;
+  console.log(req.body);
+  stringPassword = toString(password);
+  var hashedPassword = "";
+  hashedPassword += await bcrypt.hash(password, 10);
+  var obj = {
+    fullName: req.body[0].fullName,
+    email: req.body[0].email,
+    password: hashedPassword,
+    role: req.body[0].role,
+    cohort: req.body[0].cohort,
+    Gender: req.body[0].Gender,
+  };
+  User.create(obj);
 });
+app.get("/chatRoomData", (req, res) => {
+  const chat = database.CHATROOM;
+  chat.find((err, data) => {
+    if (err) console.log(err);
+    else res.send(data);
+  });
+});
+
 app.get("/UserData", (req, res) => {
   const User = database.RBK;
   User.find((err, data) => {
@@ -58,13 +78,27 @@ app.post("/CohortCreation", (req, res) => {
   const cohort = database.COHORT;
   cohort.create(req.body);
 });
-app.post("/loginTest", (req, res) => {
-  // console.log(req.body.fullName);
+// app.post("/loginTest", (req, res) => {
+//   // console.log(req.body.fullName);
+//   console.log(req.body);
+//   // res.json();
+// const onlineUsres = database.ONLINEUSERS;
+// onlineUsres.create(req.body);
+// });
+
+app.post("/loginTest", async (req, res) => {
+  var User = database.RBK;
   console.log(req.body);
-  // res.json();
-  const onlineUsres = database.ONLINEUSERS;
-  onlineUsres.create(req.body);
+  console.log(req.body.fullName);
+  console.log(req.body.loginPassword);
+  console.log(req.body.hashedPassword);
+  if (await bcrypt.compare(req.body.loginPassword, req.body.hashedPassword)) {
+    console.log("success");
+    const onlineUsres = database.ONLINEUSERS;
+    onlineUsres.create(req.body);
+  }
 });
+
 app.post("/logOutTest", (req, res) => {
   console.log(req.body);
   const onlineUsres = database.ONLINEUSERS;
@@ -149,10 +183,12 @@ const socketio = require("socket.io").listen();
 // const io = socketio(server);
 var io = require("socket.io").listen(server);
 io.on("connection", function (socket) {
+  const chat = database.CHATROOM;
   console.log("User Connected");
   socket.on("chat message", function (msg) {
     io.emit("chat message", msg);
-    console.log("Message");
+    console.log(msg);
+    chat.create(msg);
   });
   socket.on("disconnect", function (msg) {
     console.log("User DisConnected");

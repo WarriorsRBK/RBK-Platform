@@ -16,6 +16,7 @@ class Chat extends Component {
       name: localStorage.fullName,
       role: "HIR",
       curTime: new Date().toLocaleString(),
+      chatRoomData: [],
     };
   }
 
@@ -26,7 +27,13 @@ class Chat extends Component {
       });
     });
   }
-
+  componentWillMount() {
+    fetch("http://localhost:3000/chatRoomData")
+      .then((res) => res.json())
+      .then((chatRoomData) => this.setState({ chatRoomData }))
+      // .then(() => console.log(this.state.data))
+      .catch((err) => console.log(err));
+  }
   onTextChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };

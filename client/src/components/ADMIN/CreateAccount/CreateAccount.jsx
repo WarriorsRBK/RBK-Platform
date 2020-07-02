@@ -30,7 +30,7 @@ class CreateAccount extends React.Component {
     var data4 = document.getElementById("select1").value;
     var data5 = document.getElementById("select2").value;
     var data6 = document.getElementById("select3").value;
-    var defaultPassword = "Cohrot" + data5 + data4;
+    var defaultPassword = "Cohort" + data5 + data4;
     for (var i = 0; i < UserData.length; i++) {
       if (UserData[i].fullName.toLowerCase() === data1.toLowerCase()) {
         alert("insert a new fullName pls!!");

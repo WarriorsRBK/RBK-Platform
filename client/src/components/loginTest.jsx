@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Axios from "axios";
-import crypto from "crypto";
+
 class LoginTest extends React.Component {
   constructor() {
     super();
@@ -24,21 +24,22 @@ class LoginTest extends React.Component {
       .catch((err) => console.log(err));
   }
   loginButton() {
+    // console.Log("clicked");
     const fullNameTest = document.getElementById("input1").value;
     const passwordTest = document.getElementById("input2").value;
     const { UserData } = this.state;
     for (var i = 0; i < UserData.length; i++) {
       if (
-        fullNameTest === UserData[i].fullName &&
-        passwordTest === UserData[i].password
+        fullNameTest === UserData[i].fullName
+        // && passwordTest === UserData[i].password
       ) {
         const obj = {};
         const role = UserData[i].role;
         obj["fullName"] = fullNameTest;
-        obj["password"] = passwordTest;
+        obj["loginPassword"] = passwordTest;
         obj["role"] = role;
+        obj["hashedPassword"] = UserData[i].password;
         localStorage.setItem("fullName", fullNameTest);
-        localStorage.setItem("password", passwordTest);
         localStorage.setItem("role", role);
         fetch("http://localhost:3000/loginTest", {
           method: "POST",
