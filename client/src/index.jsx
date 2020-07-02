@@ -1,4 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Chat from "./components/ChatRoom/ChatRoom.jsx";
-// ReactDOM.render(<Chat />, document.getElementById("app"));
+import CreateAccount from "./components/ADMIN/CreateAccount/CreateAccount.jsx";
+ReactDOM.render(<CreateAccount />, document.getElementById("app"));

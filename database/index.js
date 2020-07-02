@@ -18,10 +18,8 @@ exports.RBK = mongoose.model("RBK", usersSchema);
 
 let chatRoomSchema = new Schema({
   message: String,
-  messageSender: String,
-  messageSenderCohort: Number,
-  messageSenderRole: String,
-  createdAt: String,
+  name: String,
+  role: String,
 });
 
 exports.CHATROOM = mongoose.model("CHATROOM", chatRoomSchema);

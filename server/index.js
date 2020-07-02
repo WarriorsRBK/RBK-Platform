@@ -39,6 +39,7 @@ app.post("/DeleteUser", (req, res) => {
 app.post("/UserCreation", async (req, res) => {
   var User = database.RBK;
   password = req.body[0].password;
+  console.log(req.body);
   stringPassword = toString(password);
   var hashedPassword = "";
   hashedPassword += await bcrypt.hash(password, 10);
@@ -51,6 +52,13 @@ app.post("/UserCreation", async (req, res) => {
     Gender: req.body[0].Gender,
   };
   User.create(obj);
+});
+app.get("/chatRoomData", (req, res) => {
+  const chat = database.CHATROOM;
+  chat.find((err, data) => {
+    if (err) console.log(err);
+    else res.send(data);
+  });
 });
 
 app.get("/UserData", (req, res) => {
@@ -163,10 +171,12 @@ const socketio = require("socket.io").listen();
 // const io = socketio(server);
 var io = require("socket.io").listen(server);
 io.on("connection", function (socket) {
+  const chat = database.CHATROOM;
   console.log("User Connected");
   socket.on("chat message", function (msg) {
     io.emit("chat message", msg);
-    console.log("Message");
+    console.log(msg);
+    chat.create(msg);
   });
   socket.on("disconnect", function (msg) {
     console.log("User DisConnected");
