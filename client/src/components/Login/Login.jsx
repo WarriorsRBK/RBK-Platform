@@ -30,6 +30,10 @@ class Login extends Component {
     let password = $("#examplePassword").val();
     let result = await axios.post("/CheckUser", { email, password });
     this.setState({ acceptance: result.data });
+    console.log(this.state.acceptance);
+    if (!this.state.acceptance) {
+      $("#errorMessage").text("Invalid Username Or Password!");
+    }
   }
   render() {
     return (
@@ -58,6 +62,7 @@ class Login extends Component {
               />
             </FormGroup>
           </Col>
+          <p id="errorMessage"></p>
           <Button onClick={this.checkUser.bind(this)}>Submit</Button>
         </Form>
       </Container>

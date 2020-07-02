@@ -44,6 +44,7 @@ class DeleteButton extends React.Component {
               variant="outline-light"
               id="deleteButton"
               onClick={this.showChildren.bind(this)}
+              block
             >
               Delete
             </Button>
@@ -62,7 +63,7 @@ class DeleteButton extends React.Component {
                 <Button
                   onClick={this.showDeleteCohort.bind(this)}
                   variant="light"
-                  id="DeleteCohort"
+                  id="deleteCohort"
                   size="sm"
                 >
                   Delete Cohort

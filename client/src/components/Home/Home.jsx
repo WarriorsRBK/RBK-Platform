@@ -14,6 +14,7 @@ class Home extends React.Component {
       $("#myModal").css("display", "none");
       $("#homediv").css("filter", "");
       $("#homediv").css("-webkit-filter", "");
+      $("#errorMessage").text("");
     };
   }
   render() {

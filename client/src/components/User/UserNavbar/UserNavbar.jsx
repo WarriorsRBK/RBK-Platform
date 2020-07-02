@@ -3,7 +3,7 @@ import "./UserNavbar.css";
 import $ from "jquery";
 import UserProfile from "../UserProfile/UserProfile.jsx";
 import CohortButton from "../CohortButton/CohortButton.jsx";
-import ChatRoomButton from "../ChatRoomButton/ChatRoomButton.jsx";
+import ChatRoomButton from "../../ADMIN/ChatRoomButton/ChatRoomButton.jsx";
 class UserNavbar extends React.Component {
   constructor(props) {
     super(props);
