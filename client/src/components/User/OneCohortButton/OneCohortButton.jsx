@@ -104,6 +104,7 @@ class OneCohortButton extends React.Component {
                             variant="outline-light"
                             block
                           >
+                            <div className="onlinecheck" />
                             {element.fullName}
                           </Button>
                         </li>
@@ -131,6 +132,7 @@ class OneCohortButton extends React.Component {
                             variant="outline-light"
                             block
                           >
+                            <div className="onlinecheck" />
                             {element.fullName}
                           </Button>
                         </li>

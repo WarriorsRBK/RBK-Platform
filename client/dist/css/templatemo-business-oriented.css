@@ -49,6 +49,11 @@ p {
   max-width: 1480px;
 }
 
+.tm-bg-white:hover {
+  max-width: 660px;
+  background-color: white;
+}
+
 .tm-logo {
   position: absolute;
   top: 0;

@@ -1,4 +1,3 @@
-require("dotenv/config");
 const bcrypt = require("bcrypt");
 const express = require("express");
 const http = require("http");
@@ -110,7 +109,20 @@ app.post("/logOutTest", (req, res) => {
     else console.log(data);
   });
 });
-
+app.post("/CheckUser", (req, res) => {
+  const User = database.RBK;
+  User.find({ email: req.body.email }, (err, docs) => {
+    if (docs.length > 0) {
+      if (docs[0].password === req.body.password) {
+        res.send(true);
+      } else {
+        res.send(false);
+      }
+    } else {
+      res.send(false);
+    }
+  });
+});
 app.post("/updateUser", (req, res) => {
   const User = database.RBK;
   let oldFullName = req.body.fullName;
