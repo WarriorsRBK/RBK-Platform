@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const Schema = mongoose.Schema;
 mongoose.connect("mongodb://localhost:27017/RBK", {
   useNewUrlParser: true,
@@ -42,13 +43,12 @@ let pinnedBoard = new Schema({
   redPin: Number,
   bluePin: Number,
   yellowPin: Number,
-  cohort: String,  
-})
+  cohort: String,
+});
 
-exports.PINNEDBOARD = mongoose.model("PINNEDBOARD", pinnedBoard)
+exports.PINNEDBOARD = mongoose.model("PINNEDBOARD", pinnedBoard);
 let onlineUsersSchema = mongoose.Schema({
   fullName: String,
-  password: String,
   role: String,
 });
 

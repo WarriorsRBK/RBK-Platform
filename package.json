@@ -21,8 +21,11 @@
     "axios": "^0.19.2",
     "babel-loader": "^8.1.0",
     "babel-runtime": "^6.26.0",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.0",
+    "classlist.js": "^1.1.20150312",
+    "console": "^0.7.2",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "css-loader": "^3.6.0",
@@ -35,7 +38,6 @@
     "path": "^0.12.7",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
-    "react-dom": "^16.13.1",
     "react-fontawesome": "^1.7.1",
     "react-router-dom": "^5.2.0",
     "socket.io": "^2.3.0",
@@ -52,6 +54,7 @@
     "@babel/runtime": "^7.10.4",
     "css-loader": "^3.6.0",
     "jquery": "^3.5.1",
+    "react-dom": "^16.13.1",
     "style-loader": "^1.2.1",
     "webpack": "^4.43.0"
   }
