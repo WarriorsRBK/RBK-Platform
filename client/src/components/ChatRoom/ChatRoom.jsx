@@ -13,7 +13,7 @@ class Chat extends Component {
     this.state = {
       message: "",
       chat: [],
-      name: "",
+      name: localStorage.fullName,
       role: "HIR",
       curTime: new Date().toLocaleString(),
     };
@@ -32,9 +32,10 @@ class Chat extends Component {
   };
 
   onMessageSubmit = () => {
-    const { name, role, message } = this.state;
+    const { name, message } = this.state;
+    const role = localStorage.role;
     socket.emit("chat message", { name, role, message });
-    this.setState({ message: "" , curTime: new Date().toLocaleString()});
+    this.setState({ message: "", curTime: new Date().toLocaleString() });
   };
 
   renderChat() {
@@ -82,14 +83,14 @@ class Chat extends Component {
           {this.renderChat()}
         </div>
         <div style={{ textAlign: "center" }}>
-          <span>name</span>
+          {/* <span>name</span>
           <input
             name="name"
             onChange={(e) => this.onTextChange(e)}
             value={this.state.name}
-          />
+          /> */}
 
-          
+          {/* {localStorage.fullName} */}
           <div
             className="input-group mb-3"
             style={{ width: "55%", margin: "0 auto" }}

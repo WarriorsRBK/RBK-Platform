@@ -1,9 +1,9 @@
+require("dotenv/config");
 const express = require("express");
 const http = require("http");
+// console.log(process.env.ACCESS_TOKEN_SECRET);
 
-const cors = require('cors')
-
-
+const cors = require("cors");
 
 const app = express();
 const router = express.Router();
@@ -61,22 +61,38 @@ app.post("/CohortCreation", (req, res) => {
   const cohort = database.COHORT;
   cohort.create(req.body);
 });
+app.post("/loginTest", (req, res) => {
+  // console.log(req.body.fullName);
+  console.log(req.body);
+  // res.json();
+  const onlineUsres = database.ONLINEUSERS;
+  onlineUsres.create(req.body);
+});
+app.post("/logOutTest", (req, res) => {
+  console.log(req.body);
+  const onlineUsres = database.ONLINEUSERS;
+  const fullName = req.body.input;
+  // console.log(fullName);
+  onlineUsres.deleteOne({ fullName }, (err, data) => {
+    if (err) console.log(err);
+    else console.log(data);
+  });
+});
 // app.listen(PORT, () => {
 //   console.log("App is listening ON: ", PORT);
 // });
 
 /**
- * 
+ *
  * START OF CALENDAR
  */
 
 app.post("/calendar", (req, res) => {
   console.log("req.body", req.body);
   const calendar = database.CALENDAR;
-  var value = req.body.value
-  calendar.create({value})
+  var value = req.body.value;
+  calendar.create({ value });
   // console.log(req.body.todo.value)
-  
 });
 
 app.get("/calendar", (req, res) => {
@@ -90,7 +106,6 @@ app.delete("/:id", (req, res) => {
   console.log(req.params.id);
   calendar.findByIdAndRemove(req.params.id).then(() => res.end());
 });
-
 
 /**
  * END OF CALENDAR
@@ -118,9 +133,6 @@ router.get("/chat", (req, res) => {
   res.send("server is running");
 });
 
-
-
 /**
  *
  */
-
