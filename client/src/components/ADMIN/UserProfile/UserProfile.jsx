@@ -27,14 +27,14 @@ class UserProfile extends React.Component {
         <Container>
           <Row>
             <Col className="picture" sm="2">
-              <img src={this.state.image}></img>
+              <img className='profilesPictures' src={this.state.image}></img>
             </Col>
             <Col className="profile" sm="10">
-              <p>FullName: {this.state.profile.fullName}</p>
-              <p>Gender: {this.state.profile.Gender}</p>
-              <p>Cohort: {this.state.profile.cohort} </p>
-              <p> Role: {this.state.profile.role} </p>
-              <p> E-mail: {this.state.profile.email} </p>
+              <p className='userProfilePara'>FullName: {this.state.profile.fullName}</p>
+              <p className='userProfilePara'>Gender: {this.state.profile.Gender}</p>
+              <p className='userProfilePara'>Cohort: {this.state.profile.cohort} </p>
+              <p className='userProfilePara'> Role: {this.state.profile.role} </p>
+              <p className='userProfilePara'> E-mail: {this.state.profile.email} </p>
             </Col>
           </Row>
           <Row>

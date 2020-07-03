@@ -7,6 +7,9 @@ const router = express.Router();
 const PORT = process.env.PORT || 3000;
 const database = require("../database/index.js");
 const bodyParser = require("body-parser");
+const path = require("path");
+const { Console } = require("console");
+
 app.use(express.static(__dirname + "/../client/dist"));
 app.use(router);
 app.use(cors());
@@ -16,7 +19,8 @@ var server = app.listen(PORT, () => {
   console.log("App is listening ON: ", PORT);
 });
 app.get("/chat", (req, res) => {});
-app.get("/", (req, res) => {});
+// app.get("/", (req, res) => {});
+// app.get("/nav", (req, res) => {});
 app.post("/DeleteCohort", (req, res) => {
   // console.log(req.body);
   const cohort = database.COHORT;
@@ -34,22 +38,60 @@ app.post("/DeleteUser", (req, res) => {
     else console.log(data);
   });
 });
-
+app.get("/UsersAndPins", (req, res) => {
+  let users = [];
+  var User = database.RBK;
+  User.find({ role: "Student" }, (err, docs) => {
+    docs.forEach((element, index) => {
+      let fullName = element.fullName;
+      let RedPins = element.RedPins;
+      let YellowPins = element.YellowPins;
+      let BluePins = element.BluePins;
+      users.push({ fullName, RedPins, YellowPins, BluePins });
+    });
+  }).then(() => {
+    res.send(users);
+  });
+});
 app.post("/UserCreation", async (req, res) => {
   var User = database.RBK;
-  password = req.body[0].password;
-  console.log(req.body);
+  password = req.body.password;
   stringPassword = toString(password);
   var hashedPassword = "";
   hashedPassword += await bcrypt.hash(password, 10);
-  var obj = {
-    fullName: req.body[0].fullName,
-    email: req.body[0].email,
-    password: hashedPassword,
-    role: req.body[0].role,
-    cohort: req.body[0].cohort,
-    Gender: req.body[0].Gender,
-  };
+  if (req.body.role === "Student") {
+    var obj = {
+      fullName: req.body.fullName,
+      userName: req.body.userName,
+      email: req.body.email,
+      password: hashedPassword,
+      role: req.body.role,
+      cohort: req.body.cohort,
+      Gender: req.body.Gender,
+      RedPins: 0,
+      YellowPins: 0,
+      BluePins: 0,
+    };
+  } else if (req.body.role === "ADMIN") {
+    var obj = {
+      fullName: req.body.fullName,
+      userName: req.body.userName,
+      email: req.body.email,
+      password: hashedPassword,
+      role: req.body.role,
+      Gender: req.body.Gender,
+    };
+  } else {
+    var obj = {
+      fullName: req.body.fullName,
+      userName: req.body.userName,
+      email: req.body.email,
+      password: hashedPassword,
+      role: req.body.role,
+      cohort: req.body.cohort,
+      Gender: req.body.Gender,
+    };
+  }
   User.create(obj);
 });
 app.get("/chatRoomData", (req, res) => {
@@ -94,8 +136,8 @@ app.post("/loginTest", async (req, res) => {
   console.log(req.body.hashedPassword);
   if (await bcrypt.compare(req.body.loginPassword, req.body.hashedPassword)) {
     console.log("success");
-    const onlineUsres = database.ONLINEUSERS;
-    onlineUsres.create(req.body);
+    const onlineUsers = database.ONLINEUSERS;
+    onlineUsers.create(req.body);
   }
 });
 
@@ -111,18 +153,25 @@ app.post("/logOutTest", (req, res) => {
 });
 app.post("/CheckUser", (req, res) => {
   const User = database.RBK;
-  User.find({ email: req.body.email }, (err, docs) => {
+  User.find({ userName: req.body.userName }, async (err, docs) => {
+    console.log(docs);
+    console.log("docs", docs);
     if (docs.length > 0) {
-      if (docs[0].password === req.body.password) {
-        res.send(true);
+      var check = await bcrypt.compare(req.body.password, docs[0].password);
+      console.log(check);
+      if (check) {
+        const onlineUsers = database.ONLINEUSERS;
+        onlineUsers.create(req.body);
+        res.send([true, docs[0].fullName, docs[0].role]);
       } else {
-        res.send(false);
+        res.send([false]);
       }
     } else {
-      res.send(false);
+      res.send([false]);
     }
   });
 });
+
 app.post("/updateUser", (req, res) => {
   const User = database.RBK;
   let oldFullName = req.body.fullName;

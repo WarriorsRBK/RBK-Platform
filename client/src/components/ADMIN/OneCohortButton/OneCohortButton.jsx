@@ -76,7 +76,7 @@ class OneCohortButton extends React.Component {
       <div>
         <ul>
           <li id={`cohort${this.props.id}`}>
-            <Button variant="light" onClick={this.showChildren.bind(this)}>
+            <Button id='cohortNumberButton' variant="light" onClick={this.showChildren.bind(this)}>
               Cohort {this.props.id}
             </Button>
 
@@ -98,7 +98,7 @@ class OneCohortButton extends React.Component {
                         <li key={index} className="hirs">
                           <Button
                             onClick={this.showProfile.bind(this)}
-                            variant="outline-light"
+                            variant="light"
                             block
                           >
                             {element.fullName}
@@ -128,7 +128,7 @@ class OneCohortButton extends React.Component {
                         <li key={index} className="students">
                           <Button
                             onClick={this.showProfile.bind(this)}
-                            variant="outline-light"
+                            variant="light"
                             block
                           >
                             {element.fullName}
