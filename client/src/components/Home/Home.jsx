@@ -8,12 +8,15 @@ class Home extends React.Component {
   loginForm() {
     $("#homediv").css("filter", "blur(8px)");
     $("#homediv").css("-webkit-filter", "blur(8px)");
-    $("#myModal").css("display", "block");
+    $("#aa1").css("display", "block");
     var span = $(".close")[0];
     span.onclick = () => {
-      $("#myModal").css("display", "none");
+      $("#aa1").css("display", "none");
       $("#homediv").css("filter", "");
       $("#homediv").css("-webkit-filter", "");
+      $("#errorMessage").text("");
+      $("#examplePassword").val("");
+      $("#exampleEmail").val("");
     };
   }
   render() {
@@ -261,9 +264,7 @@ class Home extends React.Component {
                       about the cursus, inscription and everything, you can
                       easily contact us on our e-mail.
                     </p>
-                    <a href="contact.html" className="btn btn-primary">
-                      Contact Us
-                    </a>
+                    <a className="btn btn-primary">Contact Us</a>
                   </div>
                 </div>
               </div>
@@ -309,8 +310,8 @@ class Home extends React.Component {
           </footer>
         </div>
         <div id="extra">
-          <div id="myModal" className="modal">
-            <div className="modal-content">
+          <div id="aa1" className="aa2">
+            <div className="aa3">
               <span className="close">&times;</span>
               <Login />
             </div>

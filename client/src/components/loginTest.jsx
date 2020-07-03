@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Axios from "axios";
-
+import ChatRoom from "./ChatRoom/ChatRoom.jsx";
 class LoginTest extends React.Component {
   constructor() {
     super();
@@ -10,6 +10,9 @@ class LoginTest extends React.Component {
       CohortNumbers: [],
       UserData: [],
     };
+  }
+  chat() {
+    ReactDOM.render(<ChatRoom />, document.getElementById("app"));
   }
   componentWillMount() {
     fetch("http://localhost:3000/CohortData")
@@ -55,6 +58,7 @@ class LoginTest extends React.Component {
           .catch((err) => {
             console.log(err);
           });
+        this.chat();
       }
     }
   }

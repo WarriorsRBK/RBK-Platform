@@ -9,9 +9,11 @@ import {
   Button,
 } from "reactstrap";
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import "./Login.css";
 import axios from "axios";
 import $ from "jquery";
+import App from "../App/App.jsx";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -30,10 +32,16 @@ class Login extends Component {
     let password = $("#examplePassword").val();
     let result = await axios.post("/CheckUser", { email, password });
     this.setState({ acceptance: result.data });
+    console.log(this.state.acceptance);
+    if (!this.state.acceptance) {
+      $("#errorMessage").text("Invalid Username Or Password!");
+      $("#examplePassword").val("");
+    }
+    // ReactDOM.render(<App />, document.getElementById("app"));
   }
   render() {
     return (
-      <Container className="app">
+      <Container className="formm">
         <h2>Sign In</h2>
         <Form className="form">
           <Col>
@@ -58,6 +66,7 @@ class Login extends Component {
               />
             </FormGroup>
           </Col>
+          <p id="errorMessage"></p>
           <Button onClick={this.checkUser.bind(this)}>Submit</Button>
         </Form>
       </Container>
