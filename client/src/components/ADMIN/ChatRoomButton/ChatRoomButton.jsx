@@ -19,9 +19,10 @@ class ChatRoomButton extends React.Component {
         <ul>
           <li>
             <Button
+              variant="outline-light"
               id="ChatRoomButton"
               onClick={this.showChatRoom.bind(this)}
-              variant="outline-light"
+              block
             >
               Chat Room
             </Button>

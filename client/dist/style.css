@@ -1,14 +1,6 @@
-/* #app,
-body,
-html {
+#app {
   height: 100%;
   width: 100%;
-  overflow: hidden;
-}
-body {
-  background-image: url("./bg.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 #interface {
   margin: auto;
@@ -17,7 +9,17 @@ body {
   top: 20%;
   left: 10%;
   height: 100vh;
+}
+/* body {
+  background-image: url("./bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 } */
+#app,
+body,
+html {
+  height: 100%;
+}
 #datastructures,
 #frontend {
   width: 210px;

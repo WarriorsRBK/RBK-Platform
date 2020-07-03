@@ -5,7 +5,6 @@ class CreateCohort extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: [],
       data: [],
     };
   }
@@ -17,18 +16,9 @@ class CreateCohort extends React.Component {
     }).then((data) => {
       data.json();
     });
-    ReactDOM.unmountComponentAtNode(document.getElementById("app"));
-    ReactDOM.render(<App />, document.getElementById("app"));
+    // ReactDOM.unmountComponentAtNode(document.getElementById("app"));
+    // ReactDOM.render(<App />, document.getElementById("app"));
   }
-  // checkforCohort(newCohortNumber) {
-  //   const { data } = this.state;
-  //   for (var i = 0; i < data.length; i++) {
-  //     console.log(data[i].cohortNumber, newCohortNumber);
-  //     if (data[i].cohortNumber == newCohortNumber) {
-  //       alert("you need to enter a different cohort number!!");
-  //     }
-  //   }
-  // }
   componentDidMount() {
     fetch("http://localhost:3000/CohortData")
       .then((res) => res.json())
@@ -37,9 +27,8 @@ class CreateCohort extends React.Component {
       .catch((err) => console.log(err));
   }
   submitNewCohortNumber() {
-    const { content } = this.state;
     const { data } = this.state;
-    var number = document.getElementById("CreateCohort").value;
+    var number = document.getElementById("CreateCohortInput").value;
     for (var i = 0; i < data.length; i++) {
       // console.log(data[i].cohortNumber, newCohortNumber);
       if (data[i].cohortNumber == number) {
@@ -50,22 +39,22 @@ class CreateCohort extends React.Component {
     if (number === "" || !isNaN(Number(number)) !== true) {
       alert("you  need to  insert a number !!");
     } else {
-      content.push({ cohortNumber: number });
-      this.addNewDataToDataBase(content);
-      document.getElementById("CreateCohort").value = "";
+      let obj = { cohortNumber: number };
+      this.addNewDataToDataBase(obj);
+      document.getElementById("CreateCohortInput").value = "";
     }
   }
   render() {
     return (
-      <center>
-        <div>
-          <input id="CreateCohort" placeholder="CohortNumber"></input>
+      <div id="outerDiv">
+        <div id="createCohortDiv">
+          <input id="CreateCohortInput" placeholder="Cohort Number"></input>
           <br />
           <button onClick={this.submitNewCohortNumber.bind(this)}>
             Create
           </button>
         </div>
-      </center>
+      </div>
     );
   }
 }
