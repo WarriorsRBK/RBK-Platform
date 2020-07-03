@@ -278,12 +278,7 @@ class Home extends React.Component {
                 Copyright &copy; 2020
                 <span className="tm-text-primary">RBK Platform</span> - designed
                 by
-                <a
-                  rel="nofollow"
-                  target="_parent"
-                  href="https://templatemo.com"
-                  className="tm-link-primary"
-                >
+                <a rel="nofollow" target="_parent" className="tm-link-primary">
                   Warriors Team
                 </a>
               </p>
