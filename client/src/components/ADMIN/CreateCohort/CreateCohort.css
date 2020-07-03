@@ -1,3 +1,20 @@
-#CreateCohort {
+#CreateCohortInput {
   display: inline-block;
+  color: black;
+}
+#outerDiv {
+  border: 2px solid black;
+  border-radius: 10px;
+  width: 450px;
+  height: 280px;
+  margin: auto;
+  position: relative;
+  top: 20%;
+}
+#createCohortDiv {
+  margin: auto;
+  position: relative;
+  top: 24%;
+  left: 3%;
+  width: 40%;
 }

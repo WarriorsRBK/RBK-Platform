@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "./DeleteCohortOrUsers.css";
 import Axios from "axios";
 class DeleteCohortOrUsers extends React.Component {
@@ -67,44 +67,42 @@ class DeleteCohortOrUsers extends React.Component {
   render() {
     return (
       <div>
-        <center>
-          <div id="centerAll">
-            <div id="cohorts">
-              cohorts
-              <div>
-                <select id="selectCohortNumber">
-                  {this.state.cohort.map((elem, index) => {
-                    return <option key={index}>{elem.cohortNumber}</option>;
-                  })}
-                </select>
-                <br />
-                <button onClick={this.deleteCohortFromDataBase.bind(this)}>
-                  Delete
-                </button>
-              </div>
-            </div>
-            <div id="Users">
-              users
-              <div>
-                <input id="UserNameInput" placeholder="UserFullName"></input>
-                <br />
-                <button onClick={this.deleteUserFromDataBase.bind(this)}>
-                  Delete
-                </button>
-              </div>
-            </div>
-            <div id="ShowAndHide">
-              <div>Delete User or Cohort</div>
-              <select id="select">
-                <option>User</option>
-                <option>Cohort</option>
+        <div id="centerAll">
+          <div id="cohorts">
+            cohorts
+            <div>
+              <select id="selectCohortNumber">
+                {this.state.cohort.map((elem, index) => {
+                  return <option key={index}>{elem.cohortNumber}</option>;
+                })}
               </select>
               <br />
-              <button onClick={this.chooseCohortOrUser.bind(this)}>Next</button>
-              <div className="YouChoose"></div>
+              <button onClick={this.deleteCohortFromDataBase.bind(this)}>
+                Delete
+              </button>
             </div>
           </div>
-        </center>
+          <div id="Users">
+            users
+            <div>
+              <input id="UserNameInput" placeholder="UserFullName"></input>
+              <br />
+              <button onClick={this.deleteUserFromDataBase.bind(this)}>
+                Delete
+              </button>
+            </div>
+          </div>
+          <div id="ShowAndHide">
+            <div>Delete User or Cohort</div>
+            <select id="select">
+              <option>User</option>
+              <option>Cohort</option>
+            </select>
+            <br />
+            <button onClick={this.chooseCohortOrUser.bind(this)}>Next</button>
+            <div className="YouChoose"></div>
+          </div>
+        </div>
       </div>
     );
   }

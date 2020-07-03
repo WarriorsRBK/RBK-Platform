@@ -40,6 +40,7 @@ class CohortsButton extends React.Component {
               variant="outline-light"
               id="cohortsButton"
               onClick={this.showChildren.bind(this)}
+              block
             >
               Cohorts
             </Button>

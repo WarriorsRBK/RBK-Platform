@@ -23,7 +23,7 @@
   height: 100vh;
   width: 100vw;
 }
-img {
+.profilesPictures {
   width: 120%;
   margin: auto;
   position: relative;

@@ -39,6 +39,7 @@ class CreateButton extends React.Component {
               variant="outline-light"
               id="createButton"
               onClick={this.showChildren.bind(this)}
+              block
             >
               Create
             </Button>

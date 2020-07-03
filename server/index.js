@@ -1,15 +1,14 @@
-require("dotenv/config");
+const bcrypt = require("bcrypt");
 const express = require("express");
 const http = require("http");
-// console.log(process.env.ACCESS_TOKEN_SECRET);
-
 const cors = require("cors");
-
 const app = express();
 const router = express.Router();
 const PORT = process.env.PORT || 3000;
 const database = require("../database/index.js");
 const bodyParser = require("body-parser");
+const path = require("path");
+
 app.use(express.static(__dirname + "/../client/dist"));
 app.use(router);
 app.use(cors());
@@ -19,7 +18,8 @@ var server = app.listen(PORT, () => {
   console.log("App is listening ON: ", PORT);
 });
 app.get("/chat", (req, res) => {});
-app.get("/", (req, res) => {});
+// app.get("/", (req, res) => {});
+// app.get("/nav", (req, res) => {});
 app.post("/DeleteCohort", (req, res) => {
   // console.log(req.body);
   const cohort = database.COHORT;
@@ -37,10 +37,70 @@ app.post("/DeleteUser", (req, res) => {
     else console.log(data);
   });
 });
-app.post("/UserCreation", (req, res) => {
-  const User = database.RBK;
-  User.create(req.body);
+app.get("/UsersAndPins", (req, res) => {
+  let users = [];
+  var User = database.RBK;
+  User.find({ role: "Student" }, (err, docs) => {
+    docs.forEach((element, index) => {
+      let fullName = element.fullName;
+      let RedPins = element.RedPins;
+      let YellowPins = element.YellowPins;
+      let BluePins = element.BluePins;
+      users.push({ fullName, RedPins, YellowPins, BluePins });
+    });
+  }).then(() => {
+    res.send(users);
+  });
 });
+app.post("/UserCreation", async (req, res) => {
+  var User = database.RBK;
+  password = req.body.password;
+  stringPassword = toString(password);
+  var hashedPassword = "";
+  hashedPassword += await bcrypt.hash(password, 10);
+  if (req.body.role === "Student") {
+    var obj = {
+      fullName: req.body.fullName,
+      userName: req.body.userName,
+      email: req.body.email,
+      password: hashedPassword,
+      role: req.body.role,
+      cohort: req.body.cohort,
+      Gender: req.body.Gender,
+      RedPins: 0,
+      YellowPins: 0,
+      BluePins: 0,
+    };
+  } else if (req.body.role === "ADMIN") {
+    var obj = {
+      fullName: req.body.fullName,
+      userName: req.body.userName,
+      email: req.body.email,
+      password: hashedPassword,
+      role: req.body.role,
+      Gender: req.body.Gender,
+    };
+  } else {
+    var obj = {
+      fullName: req.body.fullName,
+      userName: req.body.userName,
+      email: req.body.email,
+      password: hashedPassword,
+      role: req.body.role,
+      cohort: req.body.cohort,
+      Gender: req.body.Gender,
+    };
+  }
+  User.create(obj);
+});
+app.get("/chatRoomData", (req, res) => {
+  const chat = database.CHATROOM;
+  chat.find((err, data) => {
+    if (err) console.log(err);
+    else res.send(data);
+  });
+});
+
 app.get("/UserData", (req, res) => {
   const User = database.RBK;
   User.find((err, data) => {
@@ -59,13 +119,27 @@ app.post("/CohortCreation", (req, res) => {
   const cohort = database.COHORT;
   cohort.create(req.body);
 });
-app.post("/loginTest", (req, res) => {
-  // console.log(req.body.fullName);
+// app.post("/loginTest", (req, res) => {
+//   // console.log(req.body.fullName);
+//   console.log(req.body);
+//   // res.json();
+// const onlineUsres = database.ONLINEUSERS;
+// onlineUsres.create(req.body);
+// });
+
+app.post("/loginTest", async (req, res) => {
+  var User = database.RBK;
   console.log(req.body);
-  // res.json();
-  const onlineUsres = database.ONLINEUSERS;
-  onlineUsres.create(req.body);
+  console.log(req.body.fullName);
+  console.log(req.body.loginPassword);
+  console.log(req.body.hashedPassword);
+  if (await bcrypt.compare(req.body.loginPassword, req.body.hashedPassword)) {
+    console.log("success");
+    const onlineUsres = database.ONLINEUSERS;
+    onlineUsres.create(req.body);
+  }
 });
+
 app.post("/logOutTest", (req, res) => {
   console.log(req.body);
   const onlineUsres = database.ONLINEUSERS;
@@ -76,6 +150,21 @@ app.post("/logOutTest", (req, res) => {
     else console.log(data);
   })
 })
+
+app.post("/CheckUser", (req, res) => {
+  const User = database.RBK;
+  User.find({ email: req.body.email }, (err, docs) => {
+    if (docs.length > 0) {
+      if (docs[0].password === req.body.password) {
+        res.send(true);
+      } else {
+        res.send(false);
+      }
+    } else {
+      res.send(false);
+    }
+  });
+});
 app.post("/updateUser", (req, res) => {
   const User = database.RBK;
   let oldFullName = req.body.fullName;
@@ -136,10 +225,12 @@ const socketio = require("socket.io").listen();
 // const io = socketio(server);
 var io = require("socket.io").listen(server);
 io.on("connection", function (socket) {
+  const chat = database.CHATROOM;
   console.log("User Connected");
   socket.on("chat message", function (msg) {
     io.emit("chat message", msg);
-    console.log("Message");
+    console.log(msg);
+    chat.create(msg);
   });
   socket.on("disconnect", function (msg) {
     console.log("User DisConnected");
