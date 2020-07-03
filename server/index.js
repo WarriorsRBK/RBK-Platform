@@ -38,16 +38,87 @@ app.post("/DeleteUser", (req, res) => {
     else console.log(data);
   });
 });
+app.post("/EditPins", (req, res) => {
+  const User = database.RBK;
+  let fullName = req.body.fullName;
+  let Pins = req.body.color;
+  if (req.body.op === "Plus") {
+    if (Pins === "RedPins") {
+      User.findOne({ fullName }, (err, docs) => {
+        let RedPins = docs.RedPins + 1;
+        User.update({ fullName }, { RedPins }, (err) => {
+          if (!err) {
+            console.log("updated Pin");
+          }
+        });
+      });
+    } else if (Pins === "YellowPins") {
+      User.findOne({ fullName }, (err, docs) => {
+        let YellowPins = docs.YellowPins + 1;
+        User.update({ fullName }, { YellowPins }, (err) => {
+          if (!err) {
+            console.log("updated Pin");
+          }
+        });
+      });
+    } else {
+      User.findOne({ fullName }, (err, docs) => {
+        let BluePins = docs.BluePins + 1;
+        User.update({ fullName }, { BluePins }, (err) => {
+          if (!err) {
+            console.log("updated Pin");
+          }
+        });
+      });
+    }
+  } else {
+    if (Pins === "RedPins") {
+      User.findOne({ fullName }, (err, docs) => {
+        if (docs.RedPins > 0) {
+          let RedPins = docs.RedPins - 1;
+          User.update({ fullName }, { RedPins }, (err) => {
+            if (!err) {
+              console.log("updated Pin");
+            }
+          });
+        }
+      });
+    } else if (Pins === "YellowPins") {
+      User.findOne({ fullName }, (err, docs) => {
+        if (docs.YellowPins > 0) {
+          let YellowPins = docs.YellowPins - 1;
+          User.updateOne({ fullName }, { YellowPins }, (err) => {
+            if (!err) {
+              console.log("updated Pin");
+            }
+          });
+        }
+      });
+    } else {
+      User.findOne({ fullName }, (err, docs) => {
+        if (docs.BluePins > 0) {
+          let BluePins = docs.BluePins - 1;
+          User.update({ fullName }, { BluePins }, (err) => {
+            if (!err) {
+              console.log("updated Pin");
+            }
+          });
+        }
+      });
+    }
+  }
+});
 app.get("/UsersAndPins", (req, res) => {
   let users = [];
   var User = database.RBK;
   User.find({ role: "Student" }, (err, docs) => {
     docs.forEach((element, index) => {
+      let cohort = element.cohort;
       let fullName = element.fullName;
       let RedPins = element.RedPins;
       let YellowPins = element.YellowPins;
       let BluePins = element.BluePins;
-      users.push({ fullName, RedPins, YellowPins, BluePins });
+      users.push({ cohort, fullName, RedPins, YellowPins, BluePins });
     });
   }).then(() => {
     res.send(users);
@@ -200,11 +271,14 @@ app.post("/GetUser", (req, res) => {
  */
 
 app.post("/calendar", (req, res) => {
-  console.log("req.body", req.body);
+  // console.log("req.body", req.body);
   const calendar = database.CALENDAR;
   var value = req.body.value;
-  calendar.create({ value });
-  // console.log(req.body.todo.value)
+  calendar.create({ value }, (err, docs) => {
+    if (!err) {
+      console.log(docs);
+    }
+  });
 });
 
 app.get("/calendar", (req, res) => {

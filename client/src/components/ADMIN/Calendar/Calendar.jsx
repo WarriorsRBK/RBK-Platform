@@ -3,6 +3,7 @@ import axios from "axios";
 import $ from "jquery";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
+import "./Calendar.css";
 import {
   MDBListGroup,
   MDBListGroupItem,
@@ -16,31 +17,30 @@ class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "",
       todos: [],
       colors: true,
+      validity: false,
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.clearList = this.clearList.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
-
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
 
     const todo = {
-      value: this.state.value,
+      value: $("#todoText").val(),
     };
 
     axios.post(`/calendar`, todo).then((res) => {
       this.setState({ todos: res.data });
+      this.setState({ validity: !this.state.validity });
     });
+    $("#todoText").val("");
+    let data = await axios.get(`/calendar`);
+    this.setState({ todos: data.data });
   }
 
   componentWillMount() {
@@ -80,7 +80,12 @@ class Calendar extends React.Component {
       console.log(res.data);
     });
   }
-
+  // async componentDidUpdate(prevState) {
+  //   if (prevState.validity !== this.state.validity) {
+  //     let data = await axios.get(`/calendar`);
+  //     this.setState({ todos: data.data });
+  //   }
+  // }
   render() {
     if (this.state.todos.length === 0) {
       $("#todosID").hide();
@@ -88,20 +93,19 @@ class Calendar extends React.Component {
       $("#todosID").show();
     }
     return (
-      <div style={{ textAlign: "center" }}>
+      <div id="calendarBox" style={{ textAlign: "center" }}>
         <form onSubmit={this.handleSubmit} className="form-horizontal">
           <label>
             <h1 style={{ marginTop: "25px" }}>
-              <span style={{ color: "#0066ff" }}>Today's</span> Calendar
+              <span style={{ color: "#0066ff" }}>Today's Calendar</span>
             </h1>
             <input
+              id="todoText"
               className="form-control mr-sm-2"
               type="text"
               placeholder="Add to calendar..."
               aria-label="Add to calendar..."
               type="textarea"
-              value={this.state.value}
-              onChange={this.handleChange}
               icon="pencil-alt"
               rows="2"
             />

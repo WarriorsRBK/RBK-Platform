@@ -279,7 +279,7 @@ class Home extends React.Component {
                 <span className="tm-text-primary">RBK Platform</span> - designed
                 by
                 <a rel="nofollow" target="_parent" className="tm-link-primary">
-                   Warriors Team
+                  Warriors Team
                 </a>
               </p>
               <div className="col-lg-3 col-md-4 text-right">

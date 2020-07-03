@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Profiler } from "react";
 import ReactDOM from "react-dom";
 import Chat from "./components/ChatRoom/ChatRoom.jsx";
 import Calendar from "./components/ADMIN/Calendar/Calendar.jsx";
@@ -16,4 +16,5 @@ import Home from "./components/Home/Home.jsx";
 import CreateCohort from "./components/ADMIN/CreateCohort/CreateCohort.jsx";
 import Navbar from "./components/ADMIN/Navbar/Navbar.jsx";
 import PinBoard from "./components/PinBoard/PinBoard.jsx";
-ReactDOM.render(<App />, document.getElementById("app"));
+import EditProfile from "./components/User/EditProfile/EditProfile.jsx";
+ReactDOM.render(<PinBoard />, document.getElementById("app"));
