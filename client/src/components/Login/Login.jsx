@@ -28,12 +28,20 @@ class Login extends Component {
     this.setState({ data: data.data });
   }
   async checkUser() {
-    let email = $("#exampleEmail").val();
+    let userName = $("#exampleEmail").val();
     let password = $("#examplePassword").val();
-    let result = await axios.post("/CheckUser", { email, password });
+    let result = await axios.post("/CheckUser", { userName, password });
+
+    console.log(result);
     this.setState({ acceptance: result.data });
     console.log(this.state.acceptance);
-    if (!this.state.acceptance) {
+    if (result.data[0]) {
+      localStorage.setItem("fullName", result.data[1]);
+      localStorage.setItem("role", result.data[2]);
+      console.log(localStorage.fullName);
+      location.reload();
+    }
+    if (!result.data[0]) {
       $("#errorMessage").text("Invalid Username Or Password!");
       $("#examplePassword").val("");
     }
@@ -46,12 +54,12 @@ class Login extends Component {
         <Form className="form">
           <Col>
             <FormGroup>
-              <Label>Email</Label>
+              <Label>userName</Label>
               <Input
-                type="email"
-                name="email"
+                type="text"
+                name="userName"
                 id="exampleEmail"
-                placeholder="myemail@email.com"
+                placeholder="userName"
               />
             </FormGroup>
           </Col>
