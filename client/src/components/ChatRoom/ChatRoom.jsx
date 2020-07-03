@@ -15,39 +15,41 @@ class Chat extends Component {
       chat: [],
       name: localStorage.fullName,
       role: "HIR",
-      curTime: new Date().toLocaleString(),
-      chatRoomData: [],
+      createdAt: "",
     };
   }
 
   componentDidMount() {
-    socket.on("chat message", ({ name, role, message }) => {
+    socket.on("chat message", ({ name, role, message, createdAt }) => {
       this.setState({
-        chat: [...this.state.chat, { name, role, message }],
+        chat: [...this.state.chat, { name, role, message, createdAt }],
       });
     });
   }
   componentWillMount() {
     fetch("http://localhost:3000/chatRoomData")
       .then((res) => res.json())
-      .then((chatRoomData) => this.setState({ chatRoomData }))
+      .then((chat) => this.setState({ chat }))
       // .then(() => console.log(this.state.data))
       .catch((err) => console.log(err));
   }
   onTextChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+    this.setState({ createdAt: new Date().toLocaleString() });
   };
 
   onMessageSubmit = () => {
-    const { name, message } = this.state;
+    const { name, message, createdAt } = this.state;
     const role = localStorage.role;
-    socket.emit("chat message", { name, role, message });
-    this.setState({ message: "", curTime: new Date().toLocaleString() });
+    socket.emit("chat message", { name, role, message, createdAt });
+    this.setState({ message: "" });
   };
-
+  componentDidUpdate() {
+    $("#chatBoxRoom").scrollTop($("#chatBoxRoom")[0].scrollHeight);
+  }
   renderChat() {
     const chat = this.state.chat;
-    return chat.map(({ name, role, message }, idx) => (
+    return chat.map(({ name, role, message, createdAt }, idx) => (
       <div
         key={idx}
         className="divMessage"
@@ -63,11 +65,10 @@ class Chat extends Component {
         <span style={{ color: "green" }}> {name} : </span>
 
         <span style={{ color: "#999" }}>{message}</span>
-        <span style={{ float: "right" }}>at: {this.state.curTime}</span>
+        <span style={{ float: "right" }}>at: {createdAt}</span>
       </div>
     ));
   }
-
   render() {
     return (
       <div>
@@ -76,11 +77,11 @@ class Chat extends Component {
         </div>
 
         <div
+          id="chatBoxRoom"
           style={{
             overflowY: "scroll",
             border: "1px solid black",
             width: "600px",
-
             height: "550px",
             position: "relative",
             display: "block",

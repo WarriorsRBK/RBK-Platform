@@ -1,7 +1,7 @@
 #deleteButton {
   margin: auto;
   margin-bottom: 10px;
-  width: 200px;
+  margin-top: 20px;
 }
 #deleteAccountItem,
 #deleteCohortItem {
@@ -10,4 +10,11 @@
 }
 ul {
   list-style: none;
+}
+#deleteAccount,
+#deleteCohort {
+  width: 150px;
+  height: 50px;
+  font-size: 15px;
+  font-weight: bold;
 }

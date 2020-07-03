@@ -41,7 +41,7 @@ class UserProfile extends React.Component {
           <Container>
             <Row>
               <Col className="picture" sm="2">
-                <img src={this.state.image}></img>
+                <img className='profilesPictures' src={this.state.image}></img>
               </Col>
               <Col className="profile" sm="10">
                 <p>FullName: {this.state.profile.fullName}</p>
