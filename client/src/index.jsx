@@ -13,4 +13,7 @@ import UserProfile from "./components/User/UserProfile/UserProfile.jsx";
 import UserNavbar from "./components/User/UserNavbar/UserNavbar.jsx";
 import Login from "./components/Login/Login.jsx";
 import Home from "./components/Home/Home.jsx";
+import CreateCohort from "./components/ADMIN/CreateCohort/CreateCohort.jsx";
+import Navbar from "./components/ADMIN/Navbar/Navbar.jsx";
+import PinBoard from "./components/PinBoard/PinBoard.jsx";
 ReactDOM.render(<App />, document.getElementById("app"));

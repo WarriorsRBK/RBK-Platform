@@ -1,7 +1,6 @@
 #app {
   height: 100%;
   width: 100%;
-  overflow: hidden;
 }
 #interface {
   margin: auto;
@@ -16,6 +15,11 @@
   background-repeat: no-repeat;
   background-size: cover;
 } */
+#app,
+body,
+html {
+  height: 100%;
+}
 #datastructures,
 #frontend {
   width: 210px;

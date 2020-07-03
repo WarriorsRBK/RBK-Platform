@@ -1,11 +1,11 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Home from "../Home/Home.jsx";
 import Navbar from "../ADMIN/Navbar/Navbar.jsx";
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return <Navbar />;
-  }
+export default function App() {
+  return (
+    <div>
+      <Navbar />
+    </div>
+  );
 }
-export default App;

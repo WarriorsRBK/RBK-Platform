@@ -1,44 +1,44 @@
 import React, { Component } from "react";
 import "./CreateAccount.css";
-import Form from "react-bootstrap/Form";
+import { Col, Form } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 class CreateAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: [],
       data: [],
       CohortNumbers: [],
       UserData: [],
     };
   }
-  checkforUser(newFullName) {
+  checkforUser(newUserName) {
     const { data } = this.state;
     for (var i = 0; i < data.length; i++) {
       // console.log(data[i].fullName, newFullName);
-      if (data[i].fullName == newFullName) {
+      if (data[i].userName == newUserName) {
         alert("you need to enter a different fullName !!");
       }
     }
   }
   submitNewUser() {
-    const { content } = this.state;
     const { UserData } = this.state;
 
     // console.log(content);
+    var data0 = document.getElementById("input0").value;
     var data1 = document.getElementById("input1").value.toLowerCase();
-
     var data2 = document.getElementById("input2").value;
     var data4 = document.getElementById("select1").value;
     var data5 = document.getElementById("select2").value;
     var data6 = document.getElementById("select3").value;
     var defaultPassword = "Cohort" + data5 + data4;
     for (var i = 0; i < UserData.length; i++) {
-      if (UserData[i].fullName.toLowerCase() === data1.toLowerCase()) {
+      if (UserData[i].userName.toLowerCase() === data1.toLowerCase()) {
         alert("insert a new fullName pls!!");
         return;
       }
     }
     if (
+      data0 === "" ||
       data1 === "" ||
       data2 === "" ||
       data4 === "" ||
@@ -48,17 +48,20 @@ class CreateAccount extends React.Component {
       alert("you need to fill the whole form!");
       return;
     } else {
-      content.push({
-        fullName: data1,
+      let obj = {
+        fullName: data0,
+        userName: data1,
         email: data2,
         password: defaultPassword,
         role: data4,
         cohort: data5,
         Gender: data6,
-      });
+      };
       document.getElementById("UserInfo").innerText =
         "the User's password is " + defaultPassword;
-      this.addDataToDataBase(content);
+      this.addDataToDataBase(obj);
+      document.getElementById("input0").value = "";
+
       document.getElementById("input1").value = "";
       document.getElementById("input2").value = "";
       document.getElementById("select1").value = "";
@@ -112,57 +115,65 @@ class CreateAccount extends React.Component {
   render() {
     // console.log(this.state.CohortNumbers);
     return (
-      <Form>
-        <Form.Row>
-          <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>Email</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
-          </Form.Group>
+      <div id="outer">
+        <div id="formContainer">
+          <Form>
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridPassword">
+                <Form.Label className="formLabels">FullName</Form.Label>
+                <Form.Control id="input0" type="text" placeholder="FullName" />
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridPassword">
+                <Form.Label className="formLabels">UserName</Form.Label>
+                <Form.Control id="input1" type="text" placeholder="UserName" />
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label className="formLabels">Email</Form.Label>
+                <Form.Control
+                  id="input2"
+                  type="email"
+                  placeholder="Enter email"
+                />
+              </Form.Group>
+            </Form.Row>
 
-          <Form.Group as={Col} controlId="formGridPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-        </Form.Row>
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridState">
+                <Form.Label className="formLabels">Cohorts</Form.Label>
+                <Form.Control id="select2" as="select">
+                  {this.state.CohortNumbers.map((elem, index) => {
+                    return <option key={index}>{elem.cohortNumber}</option>;
+                  })}
+                </Form.Control>
+              </Form.Group>
 
-        <Form.Group controlId="formGridAddress1">
-          <Form.Label>Address</Form.Label>
-          <Form.Control placeholder="1234 Main St" />
-        </Form.Group>
-
-        <Form.Group controlId="formGridAddress2">
-          <Form.Label>Address 2</Form.Label>
-          <Form.Control placeholder="Apartment, studio, or floor" />
-        </Form.Group>
-
-        <Form.Row>
-          <Form.Group as={Col} controlId="formGridCity">
-            <Form.Label>City</Form.Label>
-            <Form.Control />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridState">
-            <Form.Label>State</Form.Label>
-            <Form.Control as="select" defaultValue="Choose...">
-              <option>Choose...</option>
-              <option>...</option>
-            </Form.Control>
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridZip">
-            <Form.Label>Zip</Form.Label>
-            <Form.Control />
-          </Form.Group>
-        </Form.Row>
-
-        <Form.Group id="formGridCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+              <Form.Group as={Col} controlId="formGridState">
+                <Form.Label className="formLabels">Role</Form.Label>
+                <Form.Control id="select1" as="select">
+                  <option>HIR</option>
+                  <option>Student</option>
+                  <option>ADMIN</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridState">
+                <Form.Label className="formLabels">Gender</Form.Label>
+                <Form.Control id="select3" as="select">
+                  <option>Male</option>
+                  <option>Female</option>
+                </Form.Control>
+              </Form.Group>
+            </Form.Row>
+            <Button
+              id="submitButton"
+              onClick={this.submitNewUser.bind(this)}
+              variant="primary"
+            >
+              Submit
+            </Button>
+          </Form>
+        </div>
+        <div id="UserInfo"></div>
+      </div>
       // <div className="any">
       //   <input id="input1" type="text" placeholder="fullName"></input>
       //   <input id="input2" type="text" placeholder="email"></input>
