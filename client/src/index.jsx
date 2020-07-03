@@ -17,4 +17,4 @@ import CreateCohort from "./components/ADMIN/CreateCohort/CreateCohort.jsx";
 import Navbar from "./components/ADMIN/Navbar/Navbar.jsx";
 import PinBoard from "./components/PinBoard/PinBoard.jsx";
 import EditProfile from "./components/User/EditProfile/EditProfile.jsx";
-ReactDOM.render(<PinBoard />, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById("app"));
