@@ -46,7 +46,7 @@ class Chat extends Component {
   };
 
   renderChat() {
-    const chat = this.state.chat;
+    const chat = this.state.chat; 
     return chat.map(({ name, role, message }, idx) => (
       <div
         key={idx}

@@ -94,8 +94,8 @@ app.post("/loginTest", async (req, res) => {
   console.log(req.body.hashedPassword);
   if (await bcrypt.compare(req.body.loginPassword, req.body.hashedPassword)) {
     console.log("success");
-    const onlineUsres = database.ONLINEUSERS;
-    onlineUsres.create(req.body);
+    const onlineUsers = database.ONLINEUSERS;
+    onlineUsers.create(req.body);
   }
 });
 
