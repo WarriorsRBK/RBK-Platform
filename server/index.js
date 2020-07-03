@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 const database = require("../database/index.js");
 const bodyParser = require("body-parser");
 const path = require("path");
+const { Console } = require("console");
 
 app.use(express.static(__dirname + "/../client/dist"));
 app.use(router);
@@ -206,8 +207,8 @@ app.post("/loginTest", async (req, res) => {
   console.log(req.body.hashedPassword);
   if (await bcrypt.compare(req.body.loginPassword, req.body.hashedPassword)) {
     console.log("success");
-    const onlineUsres = database.ONLINEUSERS;
-    onlineUsres.create(req.body);
+    const onlineUsers = database.ONLINEUSERS;
+    onlineUsers.create(req.body);
   }
 });
 
@@ -223,18 +224,25 @@ app.post("/logOutTest", (req, res) => {
 });
 app.post("/CheckUser", (req, res) => {
   const User = database.RBK;
-  User.find({ email: req.body.email }, (err, docs) => {
+  User.find({ userName: req.body.userName }, async (err, docs) => {
+    console.log(docs);
+    console.log("docs", docs);
     if (docs.length > 0) {
-      if (docs[0].password === req.body.password) {
-        res.send(true);
+      var check = await bcrypt.compare(req.body.password, docs[0].password);
+      console.log(check);
+      if (check) {
+        const onlineUsers = database.ONLINEUSERS;
+        onlineUsers.create(req.body);
+        res.send([true, docs[0].fullName, docs[0].role]);
       } else {
-        res.send(false);
+        res.send([false]);
       }
     } else {
-      res.send(false);
+      res.send([false]);
     }
   });
 });
+
 app.post("/updateUser", (req, res) => {
   const User = database.RBK;
   let oldFullName = req.body.fullName;
