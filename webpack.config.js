@@ -20,7 +20,7 @@ module.exports = {
             "@babel/plugin-transform-runtime",
             "@babel/plugin-proposal-class-properties",
             "@babel/plugin-proposal-async-generator-functions",
-            "@babel/plugin-transform-runtime",
+            
           ],
         },
       },

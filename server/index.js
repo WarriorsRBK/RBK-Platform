@@ -74,6 +74,8 @@ app.post("/logOutTest", (req, res) => {
   onlineUsres.deleteOne({ fullName }, (err, data) => {
     if (err) console.log(err);
     else console.log(data);
+  })
+})
 app.post("/updateUser", (req, res) => {
   const User = database.RBK;
   let oldFullName = req.body.fullName;
