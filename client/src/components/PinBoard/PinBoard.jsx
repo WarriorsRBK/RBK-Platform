@@ -25,10 +25,10 @@ class PinBoard extends React.Component {
       document.getElementById("tablee")
     );
   }
-  
+
   render() {
     return (
-      <div>
+      <div id="boardContain">
         <center>
           <select id="select">
             {this.state.cohorts.map((element, index) => {

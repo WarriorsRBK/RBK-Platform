@@ -10,3 +10,17 @@
 #left {
   margin-left: -40px;
 }
+.red {
+  width: 15px;
+  height: 15px;
+  border-radius: 75px;
+  background-color: red;
+  float: left;
+}
+.green {
+  width: 15px;
+  height: 15px;
+  border-radius: 75px;
+  background-color: green;
+  float: left;
+}

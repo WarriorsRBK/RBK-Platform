@@ -191,25 +191,17 @@ app.post("/CohortCreation", (req, res) => {
   const cohort = database.COHORT;
   cohort.create(req.body);
 });
-// app.post("/loginTest", (req, res) => {
-//   // console.log(req.body.fullName);
-//   console.log(req.body);
-//   // res.json();
-// const onlineUsres = database.ONLINEUSERS;
-// onlineUsres.create(req.body);
-// });
-
-app.post("/loginTest", async (req, res) => {
-  var User = database.RBK;
-  console.log(req.body);
-  console.log(req.body.fullName);
-  console.log(req.body.loginPassword);
-  console.log(req.body.hashedPassword);
-  if (await bcrypt.compare(req.body.loginPassword, req.body.hashedPassword)) {
-    console.log("success");
-    const onlineUsers = database.ONLINEUSERS;
-    onlineUsers.create(req.body);
-  }
+app.post("/loggedUsers", (req, res) => {
+  let result = [];
+  const onlineUsres = database.ONLINEUSERS;
+  onlineUsres.find({}, (err, docs) => {
+    docs.forEach((element, index) => {
+      if (element.role !== "ADMIN") {
+        result.push(element.fullName);
+      }
+    });
+    res.send(result);
+  });
 });
 
 app.post("/logOutTest", (req, res) => {
@@ -234,7 +226,11 @@ app.post("/CheckUser", (req, res) => {
         const onlineUsers = database.ONLINEUSERS;
         let fullName = docs[0].fullName;
         let role = docs[0].role;
-        onlineUsers.create({ fullName, role });
+        onlineUsers.find({ fullName }, (err, docs) => {
+          if (docs.length === 0) {
+            onlineUsers.create({ fullName, role });
+          }
+        });
         res.send([true, docs[0].fullName, docs[0].role]);
       } else {
         res.send([false]);
@@ -244,7 +240,15 @@ app.post("/CheckUser", (req, res) => {
     }
   });
 });
-
+app.post("/deleteOnline", (req, res) => {
+  const onlineUsers = database.ONLINEUSERS;
+  console.log(req.body);
+  onlineUsers.deleteOne({ fullName: req.body.fullName }, (err, docs) => {
+    if (!err) {
+      console.log(docs);
+    }
+  });
+});
 app.post("/updateUser", async (req, res) => {
   const User = database.RBK;
   let oldFullName = req.body.fullName;

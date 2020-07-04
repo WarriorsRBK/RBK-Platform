@@ -6,6 +6,8 @@ import ChatRoomButton from "../../ADMIN/ChatRoomButton/ChatRoomButton.jsx";
 import ProfileButtonHIR from "../ProfileButtonHIR/ProfileButtonHIR.jsx";
 import axios from "axios";
 import PinBoardButton from "../PinBoardButton/PinBoardButton.jsx";
+import LogoutButton from "../../LogoutButton/LogoutButton.jsx";
+import AnimatedBg from "react-animated-bg";
 class UserNavbarHIR extends React.Component {
   constructor(props) {
     super(props);
@@ -43,31 +45,41 @@ class UserNavbarHIR extends React.Component {
   render() {
     return (
       <div>
-        <div
-          id="container"
-          onMouseEnter={this.showNav.bind(this)}
-          onMouseLeave={this.hideNav.bind(this)}
+        <AnimatedBg
+          colors={["GhostWhite", "Gainsboro", "LightGrey"]}
+          duration={0.5}
+          delay={2}
+          timingFunction="linear"
+          className="section-styles"
         >
-          <div id="arrowbox">
+          <div
+            id="container"
+            onMouseEnter={this.showNav.bind(this)}
+            onMouseLeave={this.hideNav.bind(this)}
+          >
+            <div id="arrowbox">
+              <center>
+                <img
+                  onClick={this.fixNav.bind(this)}
+                  id="arrow"
+                  src="./arr2.png"
+                ></img>
+              </center>
+            </div>
             <center>
-              <img
-                onClick={this.fixNav.bind(this)}
-                id="arrow"
-                src="./arr.png"
-              ></img>
+              <img src="./rbk2.png" id="rbkLogo" />
             </center>
+            <div id="buttonsBox">
+              <CohortButtonHIR />
+              <ChatRoomButton />
+              <PinBoardButton />
+              <ProfileButtonHIR profile={this.state.current} />
+              <LogoutButton />
+            </div>
           </div>
-          <center>
-            <img src="./rbk2.png" id="rbkLogo" />
-          </center>
-          <div id="buttonsBox">
-            <CohortButtonHIR />
-            <ChatRoomButton />
-            <PinBoardButton />
-            <ProfileButtonHIR profile={this.state.current} />
-          </div>
-        </div>
-        <div id="interface"></div>
+          <div id="interface"></div>
+        </AnimatedBg>
+        ;
       </div>
     );
   }
