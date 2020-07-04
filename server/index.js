@@ -249,11 +249,13 @@ app.post("/deleteOnline", (req, res) => {
     }
   });
 });
-app.post("/updateUser", (req, res) => {
+app.post("/updateUser", async (req, res) => {
   const User = database.RBK;
   let oldFullName = req.body.fullName;
   let newData = req.body.obj;
-  console.log(oldFullName, newData);
+  if (newData.password) {
+    newData.password = await bcrypt.hash(req.body.obj.password, 10);
+  }
   User.updateOne({ fullName: oldFullName }, newData, (err) => {
     if (!err) {
       console.log("updated");
@@ -279,9 +281,11 @@ app.post("/calendar", (req, res) => {
   // console.log("req.body", req.body);
   const calendar = database.CALENDAR;
   var value = req.body.value;
-  calendar.create({ value }, (err, docs) => {
+  var startTime = req.body.startTime;
+  var endTime = req.body.endTime;
+  calendar.create({ value, startTime, endTime }, (err, docs) => {
     if (!err) {
-      console.log(docs);
+      console.log("data Has Been Created");
     }
   });
 });

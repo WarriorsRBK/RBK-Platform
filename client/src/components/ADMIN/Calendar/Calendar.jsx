@@ -32,6 +32,8 @@ class Calendar extends React.Component {
 
     const todo = {
       value: $("#todoText").val(),
+      startTime: $("#startTime").val(),
+      endTime: $("#endTime").val(),
     };
 
     axios.post(`/calendar`, todo).then((res) => {
@@ -39,16 +41,22 @@ class Calendar extends React.Component {
       this.setState({ validity: !this.state.validity });
     });
     $("#todoText").val("");
+    $("#startTime").val("");
+    $("#endTime").val("");
     let data = await axios.get(`/calendar`);
-    this.setState({ todos: data.data });
+    const reversedTodos = data.data.reverse();
+    this.setState({ todos: reversedTodos });
   }
 
   componentWillMount() {
     fetch("/calendar")
       .then((res) => res.json())
-      .then((todos) =>
-        this.setState({ todos }, () => console.log("todos here fetched", todos))
-      );
+      .then((todos) => {
+        const reversedTodos = todos.reverse();
+        this.setState({ todos: reversedTodos }, () =>
+          console.log(this.state.todos)
+        );
+      });
   }
 
   deleteItem(id) {
@@ -59,11 +67,14 @@ class Calendar extends React.Component {
       todos: todoos,
     });
     axios.delete(`/${id}`).then((res) => {
-      console.log(res);
-      console.log(res.data);
+      // console.log(res);
+      // console.log(res.data);
     });
   }
-
+  componentDidUpdate() {
+    $("#calendarBox").scrollTop($("#calendarBox")[0].scrollHeight);
+    console.log("scrolled");
+  }
   clearList() {
     this.state.todos.map((todo) => {
       var todoID = todo["_id"];
@@ -76,8 +87,8 @@ class Calendar extends React.Component {
     });
 
     axios.post(`/calendar`, { todo: [] }).then((res) => {
-      console.log(res);
-      console.log(res.data);
+      // console.log(res);
+      // console.log(res.data);
     });
   }
   // async componentDidUpdate(prevState) {
@@ -87,11 +98,11 @@ class Calendar extends React.Component {
   //   }
   // }
   render() {
-    if (this.state.todos.length === 0) {
-      $("#todosID").hide();
-    } else {
-      $("#todosID").show();
-    }
+    // if (this.state.todos.length === 0) {
+    //   $("#todosID").hide();
+    // } else {
+    //   $("#todosID").show();
+    // }
     return (
       <div id="calendarBox" style={{ textAlign: "center" }}>
         <form onSubmit={this.handleSubmit} className="form-horizontal">
@@ -108,8 +119,32 @@ class Calendar extends React.Component {
               type="textarea"
               icon="pencil-alt"
               rows="2"
+              required
+            />
+            <input
+              id="startTime"
+              className="form-control mr-sm-2"
+              type="text"
+              placeholder="startTime"
+              aria-label="startTime"
+              type="textarea"
+              icon="pencil-alt"
+              rows="2"
+              required
+            />
+            <input
+              id="endTime"
+              className="form-control mr-sm-2"
+              type="text"
+              placeholder="endTime"
+              aria-label="endTime"
+              type="textarea"
+              icon="pencil-alt"
+              rows="2"
+              required
             />
           </label>
+
           <input
             type="submit"
             value="Submit"
@@ -117,53 +152,54 @@ class Calendar extends React.Component {
             onClick={this.handleClick}
             className="btn btn-success"
           />
+          <button onClick={this.clearList}>Clear List</button>
         </form>
-        <ul
-          style={{
-            borderStyle: "solid",
-            borderWidth: "5px",
-            marginRight: "15%",
-            marginLeft: "15%",
-            borderRadius: "8px",
-          }}
-          className="rounded-sm"
-          id="todosID"
-        >
-          {this.state.todos.map((todo, i) => {
-            return (
-              <div
-                key={i}
-                style={{ textAlign: "center", position: "relative" }}
-              >
-                <MDBListGroupItem
-                  color="secondary"
-                  key={todo["_id"]}
-                  className="my-4 mx-4"
-                  style={{ listStyleType: "none" }}
-                  key={todo["_id"]}
+        <div id="CalendarContainerfixer">
+          <ul
+            style={{
+              borderStyle: "solid",
+              borderWidth: "5px",
+              marginRight: "15%",
+              marginLeft: "15%",
+              borderRadius: "8px",
+            }}
+            className="rounded-sm"
+            id="todosID"
+          >
+            {this.state.todos.map((todo, i) => {
+              return (
+                <div
+                  className="listItemCalendar"
+                  key={i}
+                  style={{ textAlign: "center", position: "relative" }}
                 >
-                  {todo.value}
-                  <button
-                    className="btn btn-info btn-lg"
-                    key={todo["_id"] + 100}
-                  >
-                    EDIT
-                  </button>
-                  <button
-                    className="btn btn-danger"
+                  <MDBListGroupItem
+                    color="secondary"
                     key={todo["_id"]}
-                    onClick={this.deleteItem.bind(this, todo["_id"])}
+                    className="my-4 mx-4"
+                    style={{ listStyleType: "none" }}
+                    key={todo["_id"]}
                   >
-                    Delete
-                  </button>
+                    <div>
+                      from {todo.startTime} to {todo.endTime}
+                    </div>
+                    <div id="todoValuefor"> {todo.value}</div>
+                    <button
+                      id="DeleteCalendarBlog"
+                      className="btn btn-danger"
+                      key={todo["_id"]}
+                      onClick={this.deleteItem.bind(this, todo["_id"])}
+                    >
+                      Delete
+                    </button>
 
-                  <hr></hr>
-                </MDBListGroupItem>
-              </div>
-            );
-          })}
-        </ul>
-        <button onClick={this.clearList}>Clear List</button>
+                    <hr></hr>
+                  </MDBListGroupItem>
+                </div>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     );
   }
