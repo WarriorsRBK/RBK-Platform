@@ -1,0 +1,19 @@
+.left {
+  float: left;
+}
+.right {
+  margin-left: 50px;
+  width: 15px;
+}
+.fa-plus-square,
+.fa-minus-square {
+  height: 100%;
+  width: 100%;
+}
+.fa-plus-square:hover,
+.fa-minus-square:hover {
+  background-color: black;
+}
+#tableOfPins {
+  width: 40%;
+}
