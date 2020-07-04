@@ -1,9 +1,9 @@
 import React from "react";
-import "./EditProfile.css";
+import "./EditProfileHIR.css";
 import axios from "axios";
 import $ from "jquery";
 import { Button } from "react-bootstrap";
-class EditProfile extends React.Component {
+class EditProfileHIR extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +23,11 @@ class EditProfile extends React.Component {
       if (elements[i].value) {
         obj[elements[i].id] = elements[i].value;
       }
+      if (elements[i].id === "fullName") {
+        if (elements[i].value) {
+          localStorage.fullName = elements[i].value;
+        }
+      }
     }
     let fullName = this.state.data.fullName;
     axios.post("/updateUser", { obj, fullName });
@@ -40,6 +45,14 @@ class EditProfile extends React.Component {
             type="text"
             id="fullName"
             placeholder={`${this.state.data.fullName}`}
+          />
+          <br />
+          <label>UserName: </label>
+          <input
+            className="inputs"
+            type="text"
+            id="userName"
+            placeholder={`${this.state.data.userName}`}
           />
           <br />
           <label>Gender: </label>
@@ -77,9 +90,9 @@ class EditProfile extends React.Component {
           <label> Password: </label>
           <input
             className="inputs"
-            type="text"
+            type="password"
             id="password"
-            placeholder={`${this.state.data.password}`}
+            placeholder="***********************"
           />
         </div>
         <Button
@@ -93,4 +106,4 @@ class EditProfile extends React.Component {
     );
   }
 }
-export default EditProfile;
+export default EditProfileHIR;
