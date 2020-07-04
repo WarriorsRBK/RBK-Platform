@@ -4,8 +4,10 @@ import io from "socket.io-client";
 import "./ChatRoom.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
-
+import $ from 'jquery'
 const socket = io.connect("http://localhost:3000");
+
+
 
 class Chat extends Component {
   constructor() {
@@ -16,6 +18,7 @@ class Chat extends Component {
       name: localStorage.fullName,
       role: "HIR",
       createdAt: "",
+     
     };
   }
 
@@ -25,7 +28,9 @@ class Chat extends Component {
         chat: [...this.state.chat, { name, role, message, createdAt }],
       });
     });
+    
   }
+  
   componentWillMount() {
     fetch("http://localhost:3000/chatRoomData")
       .then((res) => res.json())
@@ -36,6 +41,10 @@ class Chat extends Component {
   onTextChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
     this.setState({ createdAt: new Date().toLocaleString() });
+    socket.on("typing", function (data) {
+      $('.typing').text =
+        "<p><em>" + data + " is typing a message...</em></p>";
+    });
   };
 
   onMessageSubmit = () => {
@@ -46,6 +55,7 @@ class Chat extends Component {
   };
   componentDidUpdate() {
     $("#chatBoxRoom").scrollTop($("#chatBoxRoom")[0].scrollHeight);
+    
   }
   renderChat() {
     const chat = this.state.chat;
@@ -69,6 +79,9 @@ class Chat extends Component {
       </div>
     ));
   }
+
+
+  
   render() {
     return (
       <div>
@@ -91,14 +104,7 @@ class Chat extends Component {
           {this.renderChat()}
         </div>
         <div style={{ textAlign: "center" }}>
-          {/* <span>name</span>
-          <input
-            name="name"
-            onChange={(e) => this.onTextChange(e)}
-            value={this.state.name}
-          /> */}
-
-          {/* {localStorage.fullName} */}
+          
           <div
             className="input-group mb-3"
             style={{ width: "55%", margin: "0 auto" }}
@@ -124,6 +130,7 @@ class Chat extends Component {
             </div>
           </div>
         </div>
+        <div className='typing'></div>
       </div>
     );
   }

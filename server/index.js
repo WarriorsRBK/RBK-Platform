@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 const database = require("../database/index.js");
 const bodyParser = require("body-parser");
 const path = require("path");
+const { Console } = require("console");
 
 app.use(express.static(__dirname + "/../client/dist"));
 app.use(router);
@@ -37,16 +38,87 @@ app.post("/DeleteUser", (req, res) => {
     else console.log(data);
   });
 });
+app.post("/EditPins", (req, res) => {
+  const User = database.RBK;
+  let fullName = req.body.fullName;
+  let Pins = req.body.color;
+  if (req.body.op === "Plus") {
+    if (Pins === "RedPins") {
+      User.findOne({ fullName }, (err, docs) => {
+        let RedPins = docs.RedPins + 1;
+        User.update({ fullName }, { RedPins }, (err) => {
+          if (!err) {
+            console.log("updated Pin");
+          }
+        });
+      });
+    } else if (Pins === "YellowPins") {
+      User.findOne({ fullName }, (err, docs) => {
+        let YellowPins = docs.YellowPins + 1;
+        User.update({ fullName }, { YellowPins }, (err) => {
+          if (!err) {
+            console.log("updated Pin");
+          }
+        });
+      });
+    } else {
+      User.findOne({ fullName }, (err, docs) => {
+        let BluePins = docs.BluePins + 1;
+        User.update({ fullName }, { BluePins }, (err) => {
+          if (!err) {
+            console.log("updated Pin");
+          }
+        });
+      });
+    }
+  } else {
+    if (Pins === "RedPins") {
+      User.findOne({ fullName }, (err, docs) => {
+        if (docs.RedPins > 0) {
+          let RedPins = docs.RedPins - 1;
+          User.update({ fullName }, { RedPins }, (err) => {
+            if (!err) {
+              console.log("updated Pin");
+            }
+          });
+        }
+      });
+    } else if (Pins === "YellowPins") {
+      User.findOne({ fullName }, (err, docs) => {
+        if (docs.YellowPins > 0) {
+          let YellowPins = docs.YellowPins - 1;
+          User.updateOne({ fullName }, { YellowPins }, (err) => {
+            if (!err) {
+              console.log("updated Pin");
+            }
+          });
+        }
+      });
+    } else {
+      User.findOne({ fullName }, (err, docs) => {
+        if (docs.BluePins > 0) {
+          let BluePins = docs.BluePins - 1;
+          User.update({ fullName }, { BluePins }, (err) => {
+            if (!err) {
+              console.log("updated Pin");
+            }
+          });
+        }
+      });
+    }
+  }
+});
 app.get("/UsersAndPins", (req, res) => {
   let users = [];
   var User = database.RBK;
   User.find({ role: "Student" }, (err, docs) => {
     docs.forEach((element, index) => {
+      let cohort = element.cohort;
       let fullName = element.fullName;
       let RedPins = element.RedPins;
       let YellowPins = element.YellowPins;
       let BluePins = element.BluePins;
-      users.push({ fullName, RedPins, YellowPins, BluePins });
+      users.push({ cohort, fullName, RedPins, YellowPins, BluePins });
     });
   }).then(() => {
     res.send(users);
@@ -135,8 +207,8 @@ app.post("/loginTest", async (req, res) => {
   console.log(req.body.hashedPassword);
   if (await bcrypt.compare(req.body.loginPassword, req.body.hashedPassword)) {
     console.log("success");
-    const onlineUsres = database.ONLINEUSERS;
-    onlineUsres.create(req.body);
+    const onlineUsers = database.ONLINEUSERS;
+    onlineUsers.create(req.body);
   }
 });
 
@@ -153,18 +225,25 @@ app.post("/logOutTest", (req, res) => {
 
 app.post("/CheckUser", (req, res) => {
   const User = database.RBK;
-  User.find({ email: req.body.email }, (err, docs) => {
+  User.find({ userName: req.body.userName }, async (err, docs) => {
+    console.log(docs);
+    console.log("docs", docs);
     if (docs.length > 0) {
-      if (docs[0].password === req.body.password) {
-        res.send(true);
+      var check = await bcrypt.compare(req.body.password, docs[0].password);
+      console.log(check);
+      if (check) {
+        const onlineUsers = database.ONLINEUSERS;
+        onlineUsers.create(req.body);
+        res.send([true, docs[0].fullName, docs[0].role]);
       } else {
-        res.send(false);
+        res.send([false]);
       }
     } else {
-      res.send(false);
+      res.send([false]);
     }
   });
 });
+
 app.post("/updateUser", (req, res) => {
   const User = database.RBK;
   let oldFullName = req.body.fullName;
@@ -193,11 +272,14 @@ app.post("/GetUser", (req, res) => {
  */
 
 app.post("/calendar", (req, res) => {
-  console.log("req.body", req.body);
+  // console.log("req.body", req.body);
   const calendar = database.CALENDAR;
   var value = req.body.value;
-  calendar.create({ value });
-  // console.log(req.body.todo.value)
+  calendar.create({ value }, (err, docs) => {
+    if (!err) {
+      console.log(docs);
+    }
+  });
 });
 
 app.get("/calendar", (req, res) => {
@@ -232,6 +314,10 @@ io.on("connection", function (socket) {
     console.log(msg);
     chat.create(msg);
   });
+  socket.on('typing', (data) => {
+    console.log('typing data',data)
+    socket.broadcast.emit('typing', data)
+  })
   socket.on("disconnect", function (msg) {
     console.log("User DisConnected");
   });
