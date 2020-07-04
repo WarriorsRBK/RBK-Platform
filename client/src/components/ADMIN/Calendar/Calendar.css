@@ -1,9 +1,51 @@
 #calendarBox {
-  width: 50%;
-  height: 50%;
+  max-width: 150%;
+  max-height: 150%;
   border: 2px solid black;
   border-radius: 10px;
 }
+
+#startTime {
+  max-width: 100px;
+}
+#endTime {
+  max-width: 100px;
+}
+/* .btn btn-success {
+  max-width: 200px;
+} */
 #todosID {
-  max-height: 50%;
+  width: 650px;
+  height: 650px;
+  max-width: 50%;
+  max-height: 100vh;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  overflow-y: scroll;
+  /* border: 1px solid gray; */
+  scroll-snap-type: mandatory;
+  scroll-snap-points-y: repeat(3rem);
+  scroll-snap-type: y mandatory;
+}
+
+.listItemCalendar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scroll-snap-align: start;
+}
+
+#DeleteCalendarBlog {
+  float: right;
+  margin-bottom: 0px;
+  margin-right: 0px;
+}
+ul {
+  position: relative;
+}
+#CalendarContainerfixer {
+  width: 100%;
+}
+#todoValuefor {
+  float: left;
 }
