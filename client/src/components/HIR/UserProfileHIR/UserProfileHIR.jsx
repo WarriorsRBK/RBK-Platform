@@ -1,27 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import "./UserProfile.css";
+import "./UserProfileHIR.css";
 import $ from "jquery";
-import EditProfile from "../EditProfile/EditProfile.jsx";
-class UserProfile extends React.Component {
+import EditProfileHIR from "../EditProfileHIR/EditProfileHIR.jsx";
+import axios from "axios";
+class UserProfileHIR extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile: null,
+      profile: {},
       image: "./male.jpg",
     };
   }
-  componentWillMount() {
-    for (let i = 0; i < this.props.profiles.length; i++) {
-      if (this.props.profiles[i].fullName === this.props.fullName) {
-        const currentProfile = this.props.profiles[i];
-        if (currentProfile.Gender === "Female") {
-          this.setState({ image: "./female.jpg" });
-        }
-        this.setState({ profile: currentProfile });
-      }
-    }
+  // async componentWillMount() {
+  //   let data = await axios.post("/GetUser", {
+  //     fullName: localStorage.fullName,
+  //   });
+  //   this.setState({ profile: data.data });
+  // }
+  async componentDidUpdate() {
+    let profile = await axios.post("/GetUser", {
+      fullName: localStorage.fullName,
+    });
+    this.setState({ profile: profile.data });
   }
   editProfile() {
     $("#profilecontainer").css("filter", "blur(8px)");
@@ -41,14 +43,28 @@ class UserProfile extends React.Component {
           <Container>
             <Row>
               <Col className="picture" sm="2">
-                <img className='profilesPictures' src={this.state.image}></img>
+                <img className="profilesPictures" src={this.state.image}></img>
               </Col>
               <Col className="profile" sm="10">
-                <p>FullName: {this.state.profile.fullName}</p>
-                <p>Gender: {this.state.profile.Gender}</p>
-                <p>Cohort: {this.state.profile.cohort} </p>
-                <p> Role: {this.state.profile.role} </p>
-                <p> E-mail: {this.state.profile.email} </p>
+                <label className="profileLabels">
+                  FullName: {this.props.profile.fullName}
+                </label>
+                <br />
+                <label className="profileLabels">
+                  Gender: {this.props.profile.Gender}
+                </label>
+                <br />
+                <label className="profileLabels">
+                  Cohort: {this.props.profile.cohort}
+                </label>
+                <br />
+                <label className="profileLabels">
+                  Role: {this.props.profile.role}
+                </label>
+                <br />
+                <label className="profileLabels">
+                  E-mail: {this.props.profile.email}
+                </label>
               </Col>
             </Row>
             <Row>
@@ -71,7 +87,7 @@ class UserProfile extends React.Component {
           <div id="myModal" className="modal">
             <div className="modal-content">
               <span className="close">&times;</span>
-              <EditProfile fullName={"Houssem Guesmi"} />
+              <EditProfileHIR fullName={localStorage.fullName} />
             </div>
           </div>
         </div>
@@ -79,4 +95,4 @@ class UserProfile extends React.Component {
     );
   }
 }
-export default UserProfile;
+export default UserProfileHIR;

@@ -1,20 +1,30 @@
 import React from "react";
-import "./UserNavbar.css";
+import "./UserNavbarHIR.css";
 import $ from "jquery";
-import UserProfile from "../UserProfile/UserProfile.jsx";
-import CohortButton from "../CohortButton/CohortButton.jsx";
+import CohortButtonHIR from "../CohortButtonHIR/CohortButtonHIR.jsx";
 import ChatRoomButton from "../../ADMIN/ChatRoomButton/ChatRoomButton.jsx";
-class UserNavbar extends React.Component {
+import ProfileButtonHIR from "../ProfileButtonHIR/ProfileButtonHIR.jsx";
+import axios from "axios";
+import PinBoardButton from "../PinBoardButton/PinBoardButton.jsx";
+class UserNavbarHIR extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       hover: true,
+      data: [],
+      current: {},
     };
   }
-
+  async componentWillMount() {
+    let data = await axios.post("/GetUser", {
+      fullName: localStorage.fullName,
+    });
+    this.setState({ current: data.data });
+    console.log(this.state.current);
+  }
   showNav() {
-    // $("#container").animate({ left: "0" }, 1000);
-    // $("#arrow").css("transform", "rotate(180deg)");
+    $("#container").animate({ left: "0" }, 1000);
+    $("#arrow").css("transform", "rotate(180deg)");
   }
   hideNav() {
     // if (this.state.hover === true) {
@@ -51,8 +61,10 @@ class UserNavbar extends React.Component {
             <img src="./rbk2.png" id="rbkLogo" />
           </center>
           <div id="buttonsBox">
-            <CohortButton />
+            <CohortButtonHIR />
             <ChatRoomButton />
+            <PinBoardButton />
+            <ProfileButtonHIR profile={this.state.current} />
           </div>
         </div>
         <div id="interface"></div>
@@ -60,4 +72,4 @@ class UserNavbar extends React.Component {
     );
   }
 }
-export default UserNavbar;
+export default UserNavbarHIR;
