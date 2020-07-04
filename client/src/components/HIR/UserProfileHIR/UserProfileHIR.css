@@ -31,7 +31,7 @@
   height: 100%;
   border-radius: 15px;
 }
-#infoBox {
+#todaysNotes {
   /* background-color: red; */
   height: 100%;
   width: 70%;
@@ -96,5 +96,14 @@
 .profileLabels {
   font-size: 15px;
   color: black;
+  font-weight: bold;
+}
+#notes {
+  width: 90%;
+  height: 70%;
+}
+#notesLabel {
+  color: black;
+  font-size: 23px;
   font-weight: bold;
 }

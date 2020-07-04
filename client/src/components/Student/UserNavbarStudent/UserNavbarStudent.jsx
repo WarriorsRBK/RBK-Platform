@@ -1,17 +1,26 @@
 import React from "react";
 import "./UserNavbarStudent.css";
 import $ from "jquery";
-import UserProfileStudent from "../UserProfileStudent/UserProfileStudent.jsx";
 import CohortButtonStudent from "../CohortButtonStudent/CohortButtonStudent.jsx";
 import ChatRoomButton from "../../ADMIN/ChatRoomButton/ChatRoomButton.jsx";
+import ProfileButtonStudent from "../ProfileButtonStudent/ProfileButtonStudent.jsx";
+import axios from "axios";
 class UserNavbarStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       hover: true,
+      data: [],
+      current: {},
     };
   }
-
+  async componentWillMount() {
+    let data = await axios.post("/GetUser", {
+      fullName: localStorage.fullName,
+    });
+    this.setState({ current: data.data });
+    console.log(this.state.current);
+  }
   showNav() {
     // $("#container").animate({ left: "0" }, 1000);
     // $("#arrow").css("transform", "rotate(180deg)");
@@ -53,6 +62,7 @@ class UserNavbarStudent extends React.Component {
           <div id="buttonsBox">
             <CohortButtonStudent />
             <ChatRoomButton />
+            <ProfileButtonStudent profile={this.state.current} />
           </div>
         </div>
         <div id="interface"></div>

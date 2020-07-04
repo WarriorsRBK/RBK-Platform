@@ -13,6 +13,7 @@ class OneCohortButtonHIR extends React.Component {
       hirs: false,
       students: false,
       data: [],
+      online: [],
     };
   }
   showChildren() {
@@ -79,16 +80,17 @@ class OneCohortButtonHIR extends React.Component {
       this.state.hirs = false;
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
     $(`#parentstudents${this.props.id}`).css("display", "none");
     $(`#parenthirs${this.props.id}`).css("display", "none");
     $(`#students${this.props.id}`).css("display", "none");
     $(`#hirs${this.props.id}`).css("display", "none");
     $(`#students${this.props.id}`).css("margin-top", "10px");
     $(`#hirs${this.props.id}`).css("margin-top", "10px");
+    let online = await axios.post("/loggedUsers");
+    this.setState({ online: online.data });
   }
   render() {
-    console.log(this.props);
     return (
       <div>
         <ul id="left">
@@ -123,6 +125,11 @@ class OneCohortButtonHIR extends React.Component {
                             block
                           >
                             <div className="onlinecheck" />
+                            {this.state.online.includes(element.fullName) ? (
+                              <div className="green"></div>
+                            ) : (
+                              <div className="red"></div>
+                            )}
                             {element.fullName}
                           </Button>
                         </li>
@@ -154,6 +161,11 @@ class OneCohortButtonHIR extends React.Component {
                             block
                           >
                             <div className="onlinecheck" />
+                            {this.state.online.includes(element.fullName) ? (
+                              <div className="green"></div>
+                            ) : (
+                              <div className="red"></div>
+                            )}
                             {element.fullName}
                           </Button>
                         </li>
