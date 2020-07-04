@@ -9,6 +9,7 @@ class ProfileButtonHIR extends React.Component {
     super(props);
   }
   showProfile() {
+    ReactDOM.unmountComponentAtNode(document.getElementById("interface"));
     ReactDOM.render(
       <UserProfileHIR profile={this.props.profile} />,
       document.getElementById("interface")
