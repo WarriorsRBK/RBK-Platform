@@ -1,9 +1,9 @@
 import React from "react";
-import "./EditProfile.css";
+import "./EditProfileStudent.css";
 import axios from "axios";
 import $ from "jquery";
 import { Button } from "react-bootstrap";
-class EditProfile extends React.Component {
+class EditProfileStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -93,4 +93,4 @@ class EditProfile extends React.Component {
     );
   }
 }
-export default EditProfile;
+export default EditProfileStudent;

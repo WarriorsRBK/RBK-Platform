@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import "./UserProfile.css";
+import "./UserProfileStudent.css";
 import $ from "jquery";
-import EditProfile from "../EditProfile/EditProfile.jsx";
-class UserProfile extends React.Component {
+import EditProfileStudent from "../EditProfileStudent/EditProfileStudent.jsx";
+class UserProfileStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,7 +41,7 @@ class UserProfile extends React.Component {
           <Container>
             <Row>
               <Col className="picture" sm="2">
-                <img className='profilesPictures' src={this.state.image}></img>
+                <img className="profilesPictures" src={this.state.image}></img>
               </Col>
               <Col className="profile" sm="10">
                 <p>FullName: {this.state.profile.fullName}</p>
@@ -71,7 +71,7 @@ class UserProfile extends React.Component {
           <div id="myModal" className="modal">
             <div className="modal-content">
               <span className="close">&times;</span>
-              <EditProfile fullName={"Houssem Guesmi"} />
+              <EditProfileStudent fullName={"Houssem Guesmi"} />
             </div>
           </div>
         </div>
@@ -79,4 +79,4 @@ class UserProfile extends React.Component {
     );
   }
 }
-export default UserProfile;
+export default UserProfileStudent;

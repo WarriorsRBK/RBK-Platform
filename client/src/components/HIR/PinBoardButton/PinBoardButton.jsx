@@ -1,16 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./ProfileButton.css";
+import "./PinBoardButton.css";
 import Button from "react-bootstrap/Button";
-import UserProfile from "../../User/UserProfile.jsx";
+import PinBoard from "../../PinBoard/PinBoard.jsx";
 
-class ProfileButton extends React.Component {
+class PinBoardButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
-  showChatRoom() {
-    ReactDOM.render(<UserProfile />, document.getElementById("interface"));
+  showPinBoard() {
+    ReactDOM.render(<PinBoard />, document.getElementById("interface"));
   }
 
   render() {
@@ -19,11 +19,12 @@ class ProfileButton extends React.Component {
         <ul>
           <li>
             <Button
-              id="ChatRoomButton"
-              onClick={this.showChatRoom.bind(this)}
               variant="outline-light"
+              id="PinBoardButton"
+              onClick={this.showPinBoard.bind(this)}
+              block
             >
-              Chat Room
+              Pin Board
             </Button>
           </li>
         </ul>
@@ -31,4 +32,4 @@ class ProfileButton extends React.Component {
     );
   }
 }
-export default ProfileButton;
+export default PinBoardButton;

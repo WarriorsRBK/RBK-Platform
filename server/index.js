@@ -225,14 +225,16 @@ app.post("/logOutTest", (req, res) => {
 app.post("/CheckUser", (req, res) => {
   const User = database.RBK;
   User.find({ userName: req.body.userName }, async (err, docs) => {
-    console.log(docs);
+    console.log(req.body);
     console.log("docs", docs);
     if (docs.length > 0) {
       var check = await bcrypt.compare(req.body.password, docs[0].password);
       console.log(check);
       if (check) {
         const onlineUsers = database.ONLINEUSERS;
-        onlineUsers.create(req.body);
+        let fullName = docs[0].fullName;
+        let role = docs[0].role;
+        onlineUsers.create({ fullName, role });
         res.send([true, docs[0].fullName, docs[0].role]);
       } else {
         res.send([false]);
@@ -256,7 +258,6 @@ app.post("/updateUser", (req, res) => {
 });
 app.post("/GetUser", (req, res) => {
   const User = database.RBK;
-  req.body.fullName = req.body.fullName.toLowerCase();
   User.find(req.body, (err, docs) => {
     res.send(docs[0]);
   });

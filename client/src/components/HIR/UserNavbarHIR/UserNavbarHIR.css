@@ -5,7 +5,7 @@
   background-color: #b41e85;
   margin: auto;
   position: fixed;
-  /* left: -350px; */
+  left: -350px;
   border-radius: 20px;
   top: 0%;
   overflow-y: scroll;
