@@ -5,7 +5,7 @@ import Navbar from "../ADMIN/Navbar/Navbar.jsx";
 import StudentNavbar from "../Student/UserNavbarStudent/UserNavbarStudent.jsx";
 import HIRNavbar from "../HIR/UserNavbarHIR/UserNavbarHIR.jsx";
 export default function App() {
-  if (localStorage.length === 0) {
+  if (!localStorage.fullName) {
     return (
       <div>
         <Home />

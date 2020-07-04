@@ -27,18 +27,18 @@ class UserNavbarHIR extends React.Component {
     $("#arrow").css("transform", "rotate(180deg)");
   }
   hideNav() {
-    if (this.state.hover === true) {
-      $("#container").animate({ left: "-350px" }, 1000);
-      $("#arrow").css("transform", "");
-    }
+    // if (this.state.hover === true) {
+    //   $("#container").animate({ left: "-350px" }, 1000);
+    //   $("#arrow").css("transform", "");
+    // }
   }
   fixNav() {
-    if (this.state.hover === true) {
-      this.setState({ hover: false });
-      $("#container").css("left", 0);
-    } else {
-      this.setState({ hover: true });
-    }
+    // if (this.state.hover === true) {
+    //   this.setState({ hover: false });
+    //   $("#container").css("left", 0);
+    // } else {
+    //   this.setState({ hover: true });
+    // }
   }
   render() {
     return (
