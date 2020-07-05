@@ -45,7 +45,7 @@ class Navbar extends React.Component {
               <img
                 onClick={this.fixNav.bind(this)}
                 id="arrow"
-                src="./arr.png"
+                src="./arr2.png"
               ></img>
             </center>
           </div>
