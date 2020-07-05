@@ -115,7 +115,8 @@ class OneCohortButtonHIR extends React.Component {
                   {this.props.data.map((element, index) => {
                     if (
                       element.cohort === this.props.id &&
-                      element.role === "HIR"
+                      element.role === "HIR" &&
+                      element.fullName !== localStorage.fullName
                     ) {
                       return (
                         <li key={index} className="hirs">
@@ -151,7 +152,8 @@ class OneCohortButtonHIR extends React.Component {
                   {this.props.data.map((element, index) => {
                     if (
                       element.cohort === this.props.id &&
-                      element.role === "Student"
+                      element.role === "Student" &&
+                      element.fullName !== localStorage.fullName
                     ) {
                       return (
                         <li key={index} className="students">

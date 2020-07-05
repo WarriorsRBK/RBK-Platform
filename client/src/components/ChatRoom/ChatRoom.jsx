@@ -47,6 +47,15 @@ class Chat extends Component {
   componentDidUpdate() {
     $("#chatBoxRoom").scrollTop($("#chatBoxRoom")[0].scrollHeight);
   }
+  checkRole(name, role) {
+    if (role === "ADMIN") {
+      return <span style={{ color: "red" }}> {name} : </span>;
+    } else if (role === "HIR") {
+      return <span style={{ color: "blue" }}> {name} : </span>;
+    } else {
+      return <span style={{ color: "green" }}> {name} : </span>;
+    }
+  }
   renderChat() {
     const chat = this.state.chat;
     return chat.map(({ name, role, message, createdAt }, idx) => (
@@ -62,8 +71,7 @@ class Chat extends Component {
         }}
       >
         <span>{role}</span>
-        <span style={{ color: "green" }}> {name} : </span>
-
+        {this.checkRole(name, role)}
         <span style={{ color: "#999" }}>{message}</span>
         <span style={{ float: "right" }}>at: {createdAt}</span>
       </div>
@@ -71,7 +79,7 @@ class Chat extends Component {
   }
   render() {
     return (
-      <div id='chatContain'>
+      <div id="chatContain">
         <div style={{ textAlign: "center" }}>
           <h1>General chat</h1>
         </div>

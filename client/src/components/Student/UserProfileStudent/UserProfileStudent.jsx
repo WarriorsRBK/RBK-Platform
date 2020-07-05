@@ -13,7 +13,6 @@ class UserProfileStudent extends React.Component {
       image: "./male.jpg",
       context: this.props.profile.fullName === localStorage.fullName,
     };
-    console.log(this.state.context);
   }
   // async componentWillMount() {
   //   let data = await axios.post("/GetUser", {
@@ -34,6 +33,11 @@ class UserProfileStudent extends React.Component {
   }
   storeNotes() {
     localStorage.notes = " " + $("#notes").val();
+  }
+  componentWillMount() {
+    if (this.props.profile.Gender === "Female") {
+      this.setState({ image: "./female.jpg" });
+    }
   }
   render() {
     return (

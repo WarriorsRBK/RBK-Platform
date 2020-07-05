@@ -36,24 +36,23 @@ class OneCohortButtonStudent extends React.Component {
       this.setState({ students: false });
     }
   }
-  // componentDidUpdate() {
-  //   if (!this.props.visibility || !this.state.children) {
-  //     $(`#students${this.props.id}`).hide(500);
-  //     $(`#hirs${this.props.id}`).hide(500);
-  //     $(`#parenthirs${this.props.id}`).hide(500);
-  //     $(`#parentstudents${this.props.id}`).hide(500);
-  //     // this.state.children = false;
-  //     // this.state.students = false;
-  //     // this.state.hirs = false;
-  //   }
-  // }
+  componentDidUpdate() {
+    if (!this.state.children) {
+      $(`#students${this.props.id}`).hide(500);
+      $(`#hirs${this.props.id}`).hide(500);
+      $(`#parenthirs${this.props.id}`).hide(500);
+      $(`#parentstudents${this.props.id}`).hide(500);
+      this.state.students = false;
+      this.state.hirs = false;
+    }
+  }
   showHirs() {
     if (!this.state.hirs) {
       $(`#parenthirs${this.props.id}`).show(500);
       this.setState({ hirs: true });
     } else {
       $(`#parenthirs${this.props.id}`).hide(500);
-      this.setState({ nirs: false });
+      this.setState({ hirs: false });
     }
   }
   async showProfile(e) {

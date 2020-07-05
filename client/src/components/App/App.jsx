@@ -13,18 +13,21 @@ export default function App() {
       </div>
     );
   } else if (localStorage.role === "ADMIN") {
+    $("body").css("background-color", "#a9a9a9");
     return (
       <div>
         <Navbar />
       </div>
     );
   } else if (localStorage.role === "HIR") {
+    $("body").css("background-color", "#a9a9a9");
     return (
       <div>
         <HIRNavbar />
       </div>
     );
   } else {
+    $("body").css("background-color", "#a9a9a9");
     return (
       <div>
         <StudentNavbar />
