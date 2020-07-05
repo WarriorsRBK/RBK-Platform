@@ -67,39 +67,40 @@ class UserProfileHIR extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col className="info" sm="12">
-                {this.state.context ? (
-                  <div id="todaysNotes">
-                    <label id="notesLabel">Today's Notes:</label>
-                    <br />
-                    {localStorage.notes ? (
-                      <textarea
-                        type="text"
-                        id="notes"
-                        defaultValue={localStorage.notes}
-                        onChange={this.storeNotes.bind(this)}
-                      ></textarea>
-                    ) : (
-                      <textarea
-                        type="text"
-                        id="notes"
-                        onChange={this.storeNotes.bind(this)}
-                      ></textarea>
-                    )}
+              {this.state.context ? (
+                <Col className="info" sm="12">
+                  <div id="todaysNotesBox">
+                    <div id="todaysNotes">
+                      <label id="notesLabel">Today's Notes:</label>
+                      <br />
+                      {localStorage.notes ? (
+                        <textarea
+                          type="text"
+                          id="notes"
+                          defaultValue={localStorage.notes}
+                          onChange={this.storeNotes.bind(this)}
+                        ></textarea>
+                      ) : (
+                        <textarea
+                          type="text"
+                          id="notes"
+                          onChange={this.storeNotes.bind(this)}
+                        ></textarea>
+                      )}
+                    </div>
+
+                    <div id="editBox">
+                      <Button
+                        onClick={this.editProfile.bind(this)}
+                        id="myBtn"
+                        variant="outline-danger"
+                      >
+                        Edit
+                      </Button>
+                    </div>
                   </div>
-                ) : null}
-                {this.state.context ? (
-                  <div id="editBox">
-                    <Button
-                      onClick={this.editProfile.bind(this)}
-                      id="myBtn"
-                      variant="outline-danger"
-                    >
-                      Edit
-                    </Button>
-                  </div>
-                ) : null}
-              </Col>
+                </Col>
+              ) : null}
             </Row>
           </Container>
         </div>

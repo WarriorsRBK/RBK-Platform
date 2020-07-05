@@ -1,4 +1,4 @@
-.picture {
+/* .picture {
   height: 200px;
   border-radius: 15px;
   border: 2px solid black;
@@ -31,14 +31,12 @@
   height: 100%;
   border-radius: 15px;
 }
-#infoBox {
-  /* background-color: red; */
+#todaysNotes {
   height: 100%;
   width: 70%;
   float: left;
 }
 #editBox {
-  /* background-color: yellow; */
   float: right;
   width: 30%;
   height: 100%;
@@ -56,8 +54,7 @@
   width: 70%;
   position: relative;
   padding: 10px;
-  /* filter: blur(8px);
-  -webkit-filter: blur(8px); */
+
 }
 .modal {
   display: none;
@@ -92,4 +89,23 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+.profileLabels {
+  font-size: 15px;
+  color: black;
+  font-weight: bold;
+}
+#notes {
+  width: 90%;
+  height: 70%;
+}
+#notesLabel {
+  color: black;
+  font-size: 23px;
+  font-weight: bold;
+} */
+#todaysNotesBox {
+  width: 100%;
+  float: left;
+  height: 100%;
 }

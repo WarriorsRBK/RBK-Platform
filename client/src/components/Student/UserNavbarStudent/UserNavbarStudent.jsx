@@ -1,10 +1,12 @@
 import React from "react";
-import "./UserNavbarStudent.css";
+import "../../HIR/UserNavbarHIR/UserNavbarHIR.css";
 import $ from "jquery";
 import CohortButtonStudent from "../CohortButtonStudent/CohortButtonStudent.jsx";
 import ChatRoomButton from "../../ADMIN/ChatRoomButton/ChatRoomButton.jsx";
 import ProfileButtonStudent from "../ProfileButtonStudent/ProfileButtonStudent.jsx";
+import LogoutButton from "../../LogoutButton/LogoutButton.jsx";
 import axios from "axios";
+import PinBoardButtonStudent from "../PinBoardButton/PinBoardButton.jsx";
 class UserNavbarStudent extends React.Component {
   constructor(props) {
     super(props);
@@ -19,25 +21,24 @@ class UserNavbarStudent extends React.Component {
       fullName: localStorage.fullName,
     });
     this.setState({ current: data.data });
-    console.log(this.state.current);
   }
   showNav() {
-    // $("#container").animate({ left: "0" }, 1000);
-    // $("#arrow").css("transform", "rotate(180deg)");
+    $("#container").animate({ left: "0" }, 1000);
+    $("#arrow").css("transform", "rotate(180deg)");
   }
   hideNav() {
-    // if (this.state.hover === true) {
-    //   $("#container").animate({ left: "-350px" }, 1000);
-    //   $("#arrow").css("transform", "");
-    // }
+    if (this.state.hover === true) {
+      $("#container").animate({ left: "-350px" }, 1000);
+      $("#arrow").css("transform", "");
+    }
   }
   fixNav() {
-    // if (this.state.hover === true) {
-    //   this.setState({ hover: false });
-    //   $("#container").css("left", 0);
-    // } else {
-    //   this.setState({ hover: true });
-    // }
+    if (this.state.hover === true) {
+      this.setState({ hover: false });
+      $("#container").css("left", 0);
+    } else {
+      this.setState({ hover: true });
+    }
   }
   render() {
     return (
@@ -52,7 +53,7 @@ class UserNavbarStudent extends React.Component {
               <img
                 onClick={this.fixNav.bind(this)}
                 id="arrow"
-                src="./arr.png"
+                src="./arr2.png"
               ></img>
             </center>
           </div>
@@ -63,6 +64,8 @@ class UserNavbarStudent extends React.Component {
             <CohortButtonStudent />
             <ChatRoomButton />
             <ProfileButtonStudent profile={this.state.current} />
+            <PinBoardButtonStudent />
+            <LogoutButton />
           </div>
         </div>
         <div id="interface"></div>

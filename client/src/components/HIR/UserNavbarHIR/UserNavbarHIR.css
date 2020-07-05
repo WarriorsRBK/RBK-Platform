@@ -5,7 +5,7 @@
   background-color: #2a2c2d;
   margin: auto;
   position: fixed;
-  left: -350px;
+  /* left: 50px; */
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   top: 0%;
