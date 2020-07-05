@@ -78,8 +78,8 @@ class UserNavbarHIR extends React.Component {
             <CohortButtonHIR />
             <ChatRoomButton />
             <PinBoardButton />
-            <ProfileButtonHIR profile={this.state.current} />
             <CalendarButton />
+            <ProfileButtonHIR profile={this.state.current} />
             <LogoutButton />
           </div>
         </div>

@@ -70,7 +70,7 @@ class TableCompo extends React.Component {
               <th>FullName</th>
               <th id="red">Red Pins</th>
               <th id="yellow">Yellow Pins</th>
-              <th>Blue Pins</th>
+              <th id="blue">Blue Pins</th>
             </tr>
           </thead>
           <tbody>

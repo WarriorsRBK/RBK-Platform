@@ -1,7 +1,7 @@
-#calendarBox {
+#calendarBox2 {
   max-width: 60%;
   max-height: 70%;
-  border: 2px solid black;
+  /* border: 2px solid black; */
   border-radius: 10px;
   position: relative;
   margin: auto;
@@ -18,11 +18,11 @@
 /* .btn btn-success {
   max-width: 200px;
 } */
-#todosID {
-  width: 650px;
-  height: 650px;
-  max-width: 50%;
-  max-height: 100vh;
+#todosID2 {
+  width: 100%;
+  height: 80%;
+  /* max-width: 50%;
+  max-height: 100vh; */
   margin-top: 50px;
   margin-bottom: 50px;
   overflow-y: scroll;

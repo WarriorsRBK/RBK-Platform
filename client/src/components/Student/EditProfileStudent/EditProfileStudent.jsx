@@ -1,8 +1,11 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import "./EditProfileStudent.css";
 import axios from "axios";
 import $ from "jquery";
 import { Button } from "react-bootstrap";
+import App from "../../App/App.jsx";
+import UserProfileStudent from "../UserProfileStudent/UserProfileStudent.jsx";
 class EditProfileStudent extends React.Component {
   constructor(props) {
     super(props);
@@ -16,12 +19,18 @@ class EditProfileStudent extends React.Component {
     let data = await axios.post("/GetUser", { fullName });
     this.setState({ data: data.data });
   }
-  saveChanges() {
+  async saveChanges() {
     let elements = $(".inputs");
     let obj = {};
     for (let i = 0; i < elements.length; i++) {
       if (elements[i].value) {
         obj[elements[i].id] = elements[i].value;
+      }
+      if (elements[i].id === "fullName") {
+        if (elements[i].value) {
+          console.log("changed FullName");
+          localStorage.fullName = elements[i].value;
+        }
       }
     }
     let fullName = this.state.data.fullName;
@@ -29,7 +38,26 @@ class EditProfileStudent extends React.Component {
     $("#myModal").css("display", "none");
     $("#profilecontainer").css("filter", "");
     $("#profilecontainer").css("-webkit-filter", "");
+    let data = await axios.post("/GetUser", {
+      fullName: localStorage.fullName,
+    });
+    this.setState({ data: data.data });
+    ReactDOM.unmountComponentAtNode(document.getElementById("interface"));
+    ReactDOM.render(
+      <UserProfileStudent profile={this.state.data} />,
+      document.getElementById("interface")
+    );
   }
+  // async componentDidUpdate() {
+  //   let fullName = localStorage.fullName;
+  //   let data = await axios.post("/GetUser", { fullName });
+  //   this.setState({ data: data.data });
+  //   ReactDOM.unmountComponentAtNode(document.getElementById("interface"));
+  //   ReactDOM.render(
+  //     <UserProfileStudent profile={this.state.data} />,
+  //     document.getElementById("interface")
+  //   );
+  // }
   render() {
     return (
       <div className="profileToEdit" sm="10">
@@ -40,6 +68,14 @@ class EditProfileStudent extends React.Component {
             type="text"
             id="fullName"
             placeholder={`${this.state.data.fullName}`}
+          />
+          <br />
+          <label>UserName: </label>
+          <input
+            className="inputs"
+            type="text"
+            id="userName"
+            placeholder={`${this.state.data.userName}`}
           />
           <br />
           <label>Gender: </label>
@@ -77,9 +113,9 @@ class EditProfileStudent extends React.Component {
           <label> Password: </label>
           <input
             className="inputs"
-            type="text"
+            type="password"
             id="password"
-            placeholder={`${this.state.data.password}`}
+            placeholder="*********************"
           />
         </div>
         <Button
