@@ -5,7 +5,7 @@ import CreateButton from "../CreateButton/CreateButton.jsx";
 import DeleteButton from "../DeleteButton/DeleteButton.jsx";
 import CohortsButton from "../CohortsButton/CohortsButton.jsx";
 import ChatRoomButton from "../ChatRoomButton/ChatRoomButton.jsx";
-
+import LogoutButton from "../../LogoutButton/LogoutButton.jsx";
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
@@ -57,6 +57,7 @@ class Navbar extends React.Component {
             <DeleteButton />
             <CohortsButton />
             <ChatRoomButton />
+            <LogoutButton />
           </div>
         </div>
         <div id="interface"></div>

@@ -9,6 +9,7 @@ const database = require("../database/index.js");
 const bodyParser = require("body-parser");
 const path = require("path");
 const { Console } = require("console");
+const axios = require("axios");
 
 app.use(express.static(__dirname + "/../client/dist"));
 app.use(router);
@@ -240,6 +241,12 @@ app.post("/CheckUser", (req, res) => {
     }
   });
 });
+app.get("/getAPI", async (req, res) => {
+  let data = await axios.get(
+    "http://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=b80497e330444f5c936ac85b26bf8827"
+  );
+  res.send(data.data.articles);
+});
 app.post("/deleteOnline", (req, res) => {
   const onlineUsers = database.ONLINEUSERS;
   console.log(req.body);
@@ -276,7 +283,14 @@ app.post("/GetUser", (req, res) => {
  *
  * START OF CALENDAR
  */
-
+app.post("/DeleteCalendar", (req, res) => {
+  const calendar = database.CALENDAR;
+  calendar.deleteMany({}, (err, docs) => {
+    if (!err) {
+      console.log("deleted All");
+    }
+  });
+});
 app.post("/calendar", (req, res) => {
   // console.log("req.body", req.body);
   const calendar = database.CALENDAR;

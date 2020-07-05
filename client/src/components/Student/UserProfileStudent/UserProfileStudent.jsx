@@ -4,25 +4,23 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import "./UserProfileStudent.css";
 import $ from "jquery";
 import EditProfileStudent from "../EditProfileStudent/EditProfileStudent.jsx";
+import axios from "axios";
 class UserProfileStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile: null,
+      profile: {},
       image: "./male.jpg",
+      context: this.props.profile.fullName === localStorage.fullName,
     };
+    console.log(this.state.context);
   }
-  componentWillMount() {
-    for (let i = 0; i < this.props.profiles.length; i++) {
-      if (this.props.profiles[i].fullName === this.props.fullName) {
-        const currentProfile = this.props.profiles[i];
-        if (currentProfile.Gender === "Female") {
-          this.setState({ image: "./female.jpg" });
-        }
-        this.setState({ profile: currentProfile });
-      }
-    }
-  }
+  // async componentWillMount() {
+  //   let data = await axios.post("/GetUser", {
+  //     fullName: localStorage.fullName,
+  //   });
+  //   this.setState({ profile: data.data });
+  // }
   editProfile() {
     $("#profilecontainer").css("filter", "blur(8px)");
     $("#profilecontainer").css("-webkit-filter", "blur(8px)");
@@ -34,6 +32,9 @@ class UserProfileStudent extends React.Component {
       $("#profilecontainer").css("-webkit-filter", "");
     };
   }
+  storeNotes() {
+    localStorage.notes = " " + $("#notes").val();
+  }
   render() {
     return (
       <div id="userprofile">
@@ -44,26 +45,62 @@ class UserProfileStudent extends React.Component {
                 <img className="profilesPictures" src={this.state.image}></img>
               </Col>
               <Col className="profile" sm="10">
-                <p>FullName: {this.state.profile.fullName}</p>
-                <p>Gender: {this.state.profile.Gender}</p>
-                <p>Cohort: {this.state.profile.cohort} </p>
-                <p> Role: {this.state.profile.role} </p>
-                <p> E-mail: {this.state.profile.email} </p>
+                <label className="profileLabels">
+                  FullName: {this.props.profile.fullName}
+                </label>
+                <br />
+                <label className="profileLabels">
+                  Gender: {this.props.profile.Gender}
+                </label>
+                <br />
+                <label className="profileLabels">
+                  Cohort: {this.props.profile.cohort}
+                </label>
+                <br />
+                <label className="profileLabels">
+                  Role: {this.props.profile.role}
+                </label>
+                <br />
+                <label className="profileLabels">
+                  E-mail: {this.props.profile.email}
+                </label>
               </Col>
             </Row>
             <Row>
-              <Col className="info" sm="12">
-                <div id="infoBox">Infos</div>
-                <div id="editBox">
-                  <Button
-                    onClick={this.editProfile.bind(this)}
-                    id="myBtn"
-                    variant="outline-danger"
-                  >
-                    Edit
-                  </Button>
-                </div>
-              </Col>
+              {this.state.context ? (
+                <Col className="info" sm="12">
+                  <div id="todaysNotesBox">
+                    <div id="todaysNotes">
+                      <label id="notesLabel">Today's Notes:</label>
+                      <br />
+                      {localStorage.notes ? (
+                        <textarea
+                          type="text"
+                          id="notes"
+                          defaultValue={localStorage.notes}
+                          onChange={this.storeNotes.bind(this)}
+                        ></textarea>
+                      ) : (
+                        <textarea
+                          type="text"
+                          id="notes"
+                          onChange={this.storeNotes.bind(this)}
+                        ></textarea>
+                      )}
+                    </div>
+
+                    <div id="editBox">
+                      <Button
+                        onClick={this.editProfile.bind(this)}
+                        id="myBtn"
+                        variant="outline-danger"
+                      >
+                        Edit
+                      </Button>
+                    </div>
+                  </div>
+                </Col>
+              ) : null}
             </Row>
           </Container>
         </div>
@@ -71,7 +108,7 @@ class UserProfileStudent extends React.Component {
           <div id="myModal" className="modal">
             <div className="modal-content">
               <span className="close">&times;</span>
-              <EditProfileStudent fullName={"Houssem Guesmi"} />
+              <EditProfileStudent fullName={localStorage.fullName} />
             </div>
           </div>
         </div>
