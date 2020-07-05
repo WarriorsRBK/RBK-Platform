@@ -18,7 +18,9 @@ class Chat extends Component {
       createdAt: "",
     };
   }
-
+  /**
+   * @function componentDidMount that uses socket to set the new messages to the state
+   */
   componentDidMount() {
     socket.on("chat message", ({ name, role, message, createdAt }) => {
       this.setState({
@@ -26,6 +28,9 @@ class Chat extends Component {
       });
     });
   }
+  /**
+   * @function componentWillMount that gets the data from  the database and set it to the state
+   */
   componentWillMount() {
     fetch("http://localhost:3000/chatRoomData")
       .then((res) => res.json())
@@ -33,20 +38,35 @@ class Chat extends Component {
       // .then(() => console.log(this.state.data))
       .catch((err) => console.log(err));
   }
+  /**
+   * @function onTextChange that takes an obj containing the sender and the msg and set it to the state along with the date
+   * @param {obj} e
+   */
   onTextChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
     this.setState({ createdAt: new Date().toLocaleString() });
   };
-
+  /**
+   * @function onMessageSubmit that depends on a click it takes the user input along with his name and date and send it to
+   * the chat using socket
+   */
   onMessageSubmit = () => {
     const { name, message, createdAt } = this.state;
     const role = localStorage.role;
     socket.emit("chat message", { name, role, message, createdAt });
     this.setState({ message: "" });
   };
+  /**
+   * @function componentDidUpdate some jquery animation that scrolls to the last added msg
+   */
   componentDidUpdate() {
     $("#chatBoxRoom").scrollTop($("#chatBoxRoom")[0].scrollHeight);
   }
+  /**
+   * @function checkRole that cheks for the user in order to send a different msg with a different color
+   * @param {string} name
+   * @param {string} role
+   */
   checkRole(name, role) {
     if (role === "ADMIN") {
       return <span style={{ color: "red" }}> {name} : </span>;
@@ -56,6 +76,9 @@ class Chat extends Component {
       return <span style={{ color: "green" }}> {name} : </span>;
     }
   }
+  /**
+   * @function renderChat that renders the new added msgs along with the old msgs
+   */
   renderChat() {
     const chat = this.state.chat;
     return chat.map(({ name, role, message, createdAt }, idx) => (

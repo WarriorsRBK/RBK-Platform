@@ -16,6 +16,9 @@ class OneCohortButton extends React.Component {
       online: [],
     };
   }
+  /**
+   * @function showChildren depending on the state it will show or hide some components
+   */
   showChildren() {
     if (!this.state.children) {
       $(`#students${this.props.id}`).show(500);
@@ -27,6 +30,9 @@ class OneCohortButton extends React.Component {
       this.setState({ children: false });
     }
   }
+  /**
+   * @function showStudents depending on the state it will show or hide some components
+   */
   showStudents() {
     if (!this.state.students) {
       $(`#parentstudents${this.props.id}`).show(500);
@@ -36,6 +42,9 @@ class OneCohortButton extends React.Component {
       this.setState({ students: false });
     }
   }
+  /**
+   * @function componentDidUpdate depending on the state it will show or hide some components
+   */
   componentDidUpdate() {
     if (!this.props.visibility || !this.state.children) {
       $(`#students${this.props.id}`).hide(500);
@@ -47,6 +56,9 @@ class OneCohortButton extends React.Component {
       this.state.hirs = false;
     }
   }
+  /**
+   * @function showHirs depending on the state it will show or hide some components
+   */
   showHirs() {
     if (!this.state.students) {
       $(`#parenthirs${this.props.id}`).show(500);
@@ -56,6 +68,10 @@ class OneCohortButton extends React.Component {
       this.setState({ students: false });
     }
   }
+  /**
+   * @function showProfile that render the profiles depending on the user's fullName
+   * @param {obj} e that contains the user data
+   */
   showProfile(e) {
     const fullName = e.target.innerText;
     ReactDOM.unmountComponentAtNode(document.getElementById("interface"));
@@ -64,6 +80,9 @@ class OneCohortButton extends React.Component {
       document.getElementById("interface")
     );
   }
+  /**
+   * @function componentDidMount that containe some jquery animations to hide and show elements and components 
+   */
   async componentDidMount() {
     $(`#parentstudents${this.props.id}`).css("display", "none");
     $(`#parenthirs${this.props.id}`).css("display", "none");

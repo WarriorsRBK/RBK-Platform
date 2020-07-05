@@ -26,7 +26,11 @@ class Calendar extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.clearList = this.clearList.bind(this);
   }
-
+  /**
+   * @function DeleteCohort - handle all the data of the inputs
+   * @param event {clickEvent} - after a click on the submission button
+   * @returns {void}  - sends the data to server, gets the data back and also puts the data into the state
+   */
   async handleSubmit(event) {
     event.preventDefault();
 
@@ -47,7 +51,11 @@ class Calendar extends React.Component {
     const reversedTodos = data.data.reverse();
     this.setState({ todos: reversedTodos });
   }
-
+  /**
+   * @function componentWillMount that gets data from the server from the database
+   * @param {} empty
+   * @returns set the to the state before the mount of the component
+   */
   componentWillMount() {
     fetch("/calendar")
       .then((res) => res.json())
@@ -58,7 +66,10 @@ class Calendar extends React.Component {
         );
       });
   }
-
+  /**
+   * @function deleteItem that deletes a specific item from the database
+   * @param id {string}  id of the component to delete
+   */
   deleteItem(id) {
     const todoos = this.state.todos.filter((todo) => {
       return todo["_id"] !== id;
@@ -71,10 +82,17 @@ class Calendar extends React.Component {
       // console.log(res.data);
     });
   }
+  /**
+   * @function componentDidUpdate when ever the user adds a new blog it scroll to the last one
+   * @param empty {}
+   */
   componentDidUpdate() {
     $("#calendarBox").scrollTop($("#calendarBox")[0].scrollHeight);
-    console.log("scrolled");
+    // console.log("scrolled");
   }
+  /**
+   * @function clearList that clears the whole calendar
+   */
   clearList() {
     // this.state.todos.map((todo) => {
     //   var todoID = todo["_id"];
@@ -92,6 +110,10 @@ class Calendar extends React.Component {
     // });
     axios.post("/DeleteCalendar");
   }
+  /**
+   * @function componentDidUpdate that update the  whole calendar and scroll to the last update
+   * @param {bolean} prevState
+   */
   async componentDidUpdate(prevState) {
     if (prevState.validity !== this.state.validity) {
       let data = await axios.get(`/calendar`);
