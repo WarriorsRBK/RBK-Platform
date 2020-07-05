@@ -1,11 +1,11 @@
 import React from "react";
-import "./OneCohortButton.css";
+import "./OneCohortButtonStudent.css";
 import Button from "react-bootstrap/Button";
 import $ from "jquery";
-import UserProfile from "../UserProfile/UserProfile.jsx";
+import UserProfileStudent from "../UserProfileStudent/UserProfileStudent.jsx";
 import ReactDOM from "react-dom";
 
-class OneCohortButton extends React.Component {
+class OneCohortButtonStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -61,7 +61,7 @@ class OneCohortButton extends React.Component {
     console.log(fullName);
     ReactDOM.unmountComponentAtNode(document.getElementById("interface"));
     ReactDOM.render(
-      <UserProfile fullName={fullName} profiles={this.props.data} />,
+      <UserProfileStudent fullName={fullName} profiles={this.props.data} />,
       document.getElementById("interface")
     );
   }
@@ -150,4 +150,4 @@ class OneCohortButton extends React.Component {
     );
   }
 }
-export default OneCohortButton;
+export default OneCohortButtonStudent;

@@ -1,16 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./ProfileButton.css";
+import "./ProfileButtonStudent.css";
 import Button from "react-bootstrap/Button";
-import UserProfile from "../../User/UserProfile.jsx";
+import UserProfileStudent from "../UserProfileStudent/UserProfileStudent.jsx";
 
-class ProfileButton extends React.Component {
+class ProfileButtonStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
   showChatRoom() {
-    ReactDOM.render(<UserProfile />, document.getElementById("interface"));
+    ReactDOM.render(
+      <UserProfileStudent />,
+      document.getElementById("interface")
+    );
   }
 
   render() {
@@ -31,4 +34,4 @@ class ProfileButton extends React.Component {
     );
   }
 }
-export default ProfileButton;
+export default ProfileButtonStudent;

@@ -84,7 +84,7 @@ class Chat extends Component {
   
   render() {
     return (
-      <div>
+      <div id='chatContain'>
         <div style={{ textAlign: "center" }}>
           <h1>General chat</h1>
         </div>

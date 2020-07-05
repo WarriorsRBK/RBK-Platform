@@ -37,12 +37,14 @@ exports.COHORT = mongoose.model("COHORTS", cohortSchema);
 
 let CalendarSchema = new Schema({
   value: String,
+  startTime: String,
+  endTime: String,
 });
 
 exports.CALENDAR = mongoose.model("CALENDAR", CalendarSchema);
 
 let onlineUsersSchema = mongoose.Schema({
-  fullName: String,
+  fullName: { type: String, unique: true },
   role: String,
 });
 

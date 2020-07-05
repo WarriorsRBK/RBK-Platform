@@ -191,25 +191,17 @@ app.post("/CohortCreation", (req, res) => {
   const cohort = database.COHORT;
   cohort.create(req.body);
 });
-// app.post("/loginTest", (req, res) => {
-//   // console.log(req.body.fullName);
-//   console.log(req.body);
-//   // res.json();
-// const onlineUsres = database.ONLINEUSERS;
-// onlineUsres.create(req.body);
-// });
-
-app.post("/loginTest", async (req, res) => {
-  var User = database.RBK;
-  console.log(req.body);
-  console.log(req.body.fullName);
-  console.log(req.body.loginPassword);
-  console.log(req.body.hashedPassword);
-  if (await bcrypt.compare(req.body.loginPassword, req.body.hashedPassword)) {
-    console.log("success");
-    const onlineUsers = database.ONLINEUSERS;
-    onlineUsers.create(req.body);
-  }
+app.post("/loggedUsers", (req, res) => {
+  let result = [];
+  const onlineUsres = database.ONLINEUSERS;
+  onlineUsres.find({}, (err, docs) => {
+    docs.forEach((element, index) => {
+      if (element.role !== "ADMIN") {
+        result.push(element.fullName);
+      }
+    });
+    res.send(result);
+  });
 });
 
 app.post("/logOutTest", (req, res) => {
@@ -226,14 +218,20 @@ app.post("/logOutTest", (req, res) => {
 app.post("/CheckUser", (req, res) => {
   const User = database.RBK;
   User.find({ userName: req.body.userName }, async (err, docs) => {
-    console.log(docs);
+    console.log(req.body);
     console.log("docs", docs);
     if (docs.length > 0) {
       var check = await bcrypt.compare(req.body.password, docs[0].password);
       console.log(check);
       if (check) {
         const onlineUsers = database.ONLINEUSERS;
-        onlineUsers.create(req.body);
+        let fullName = docs[0].fullName;
+        let role = docs[0].role;
+        onlineUsers.find({ fullName }, (err, docs) => {
+          if (docs.length === 0) {
+            onlineUsers.create({ fullName, role });
+          }
+        });
         res.send([true, docs[0].fullName, docs[0].role]);
       } else {
         res.send([false]);
@@ -243,12 +241,22 @@ app.post("/CheckUser", (req, res) => {
     }
   });
 });
-
-app.post("/updateUser", (req, res) => {
+app.post("/deleteOnline", (req, res) => {
+  const onlineUsers = database.ONLINEUSERS;
+  console.log(req.body);
+  onlineUsers.deleteOne({ fullName: req.body.fullName }, (err, docs) => {
+    if (!err) {
+      console.log(docs);
+    }
+  });
+});
+app.post("/updateUser", async (req, res) => {
   const User = database.RBK;
   let oldFullName = req.body.fullName;
   let newData = req.body.obj;
-  console.log(oldFullName, newData);
+  if (newData.password) {
+    newData.password = await bcrypt.hash(req.body.obj.password, 10);
+  }
   User.updateOne({ fullName: oldFullName }, newData, (err) => {
     if (!err) {
       console.log("updated");
@@ -257,7 +265,6 @@ app.post("/updateUser", (req, res) => {
 });
 app.post("/GetUser", (req, res) => {
   const User = database.RBK;
-  req.body.fullName = req.body.fullName.toLowerCase();
   User.find(req.body, (err, docs) => {
     res.send(docs[0]);
   });
@@ -275,9 +282,11 @@ app.post("/calendar", (req, res) => {
   // console.log("req.body", req.body);
   const calendar = database.CALENDAR;
   var value = req.body.value;
-  calendar.create({ value }, (err, docs) => {
+  var startTime = req.body.startTime;
+  var endTime = req.body.endTime;
+  calendar.create({ value, startTime, endTime }, (err, docs) => {
     if (!err) {
-      console.log(docs);
+      console.log("data Has Been Created");
     }
   });
 });
