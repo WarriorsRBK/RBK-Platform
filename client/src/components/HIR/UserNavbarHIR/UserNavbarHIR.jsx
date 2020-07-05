@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import "./UserNavbarHIR.css";
 import $ from "jquery";
 import CohortButtonHIR from "../CohortButtonHIR/CohortButtonHIR.jsx";
@@ -7,7 +8,8 @@ import ProfileButtonHIR from "../ProfileButtonHIR/ProfileButtonHIR.jsx";
 import axios from "axios";
 import PinBoardButton from "../PinBoardButton/PinBoardButton.jsx";
 import LogoutButton from "../../LogoutButton/LogoutButton.jsx";
-import AnimatedBg from "react-animated-bg";
+import ApiComponent from "../../ApiComponent/ApiComponent.jsx";
+import CalendarButton from "../CalendarButtonHIR/CalendarButtonHIR.jsx";
 class UserNavbarHIR extends React.Component {
   constructor(props) {
     super(props);
@@ -24,62 +26,64 @@ class UserNavbarHIR extends React.Component {
     this.setState({ current: data.data });
     console.log(this.state.current);
   }
+  componentDidMount() {
+    ReactDOM.render(<ApiComponent />, document.getElementById("interface"));
+  }
+  showAPI() {
+    ReactDOM.render(<ApiComponent />, document.getElementById("interface"));
+  }
   showNav() {
     $("#container").animate({ left: "0" }, 1000);
     $("#arrow").css("transform", "rotate(180deg)");
   }
   hideNav() {
-    // if (this.state.hover === true) {
-    //   $("#container").animate({ left: "-350px" }, 1000);
-    //   $("#arrow").css("transform", "");
-    // }
+    if (this.state.hover === true) {
+      $("#container").animate({ left: "-350px" }, 1000);
+      $("#arrow").css("transform", "");
+    }
   }
   fixNav() {
-    // if (this.state.hover === true) {
-    //   this.setState({ hover: false });
-    //   $("#container").css("left", 0);
-    // } else {
-    //   this.setState({ hover: true });
-    // }
+    if (this.state.hover === true) {
+      this.setState({ hover: false });
+      $("#container").css("left", 0);
+    } else {
+      this.setState({ hover: true });
+    }
   }
   render() {
     return (
       <div>
-        <AnimatedBg
-          colors={["GhostWhite", "Gainsboro", "LightGrey"]}
-          duration={0.5}
-          delay={2}
-          timingFunction="linear"
-          className="section-styles"
+        <div
+          id="container"
+          onMouseEnter={this.showNav.bind(this)}
+          onMouseLeave={this.hideNav.bind(this)}
         >
-          <div
-            id="container"
-            onMouseEnter={this.showNav.bind(this)}
-            onMouseLeave={this.hideNav.bind(this)}
-          >
-            <div id="arrowbox">
-              <center>
-                <img
-                  onClick={this.fixNav.bind(this)}
-                  id="arrow"
-                  src="./arr2.png"
-                ></img>
-              </center>
-            </div>
+          <div id="arrowbox">
             <center>
-              <img src="./rbk2.png" id="rbkLogo" />
+              <img
+                onClick={this.fixNav.bind(this)}
+                id="arrow"
+                src="./arr2.png"
+              ></img>
             </center>
-            <div id="buttonsBox">
-              <CohortButtonHIR />
-              <ChatRoomButton />
-              <PinBoardButton />
-              <ProfileButtonHIR profile={this.state.current} />
-              <LogoutButton />
-            </div>
           </div>
-          <div id="interface"></div>
-        </AnimatedBg>
-        ;
+          <center>
+            <img
+              src="./rbk2.png"
+              id="rbkLogo"
+              onClick={this.showAPI.bind(this)}
+            />
+          </center>
+          <div id="buttonsBox">
+            <CohortButtonHIR />
+            <ChatRoomButton />
+            <PinBoardButton />
+            <ProfileButtonHIR profile={this.state.current} />
+            <CalendarButton />
+            <LogoutButton />
+          </div>
+        </div>
+        <div id="interface"></div>;
       </div>
     );
   }

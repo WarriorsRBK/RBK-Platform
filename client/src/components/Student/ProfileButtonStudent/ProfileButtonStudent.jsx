@@ -7,11 +7,11 @@ import UserProfileStudent from "../UserProfileStudent/UserProfileStudent.jsx";
 class ProfileButtonStudent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
-  showChatRoom() {
+  showProfile() {
+    ReactDOM.unmountComponentAtNode(document.getElementById('interface'))
     ReactDOM.render(
-      <UserProfileStudent />,
+      <UserProfileStudent profile={this.props.profile} />,
       document.getElementById("interface")
     );
   }
@@ -23,10 +23,10 @@ class ProfileButtonStudent extends React.Component {
           <li>
             <Button
               id="ChatRoomButton"
-              onClick={this.showChatRoom.bind(this)}
+              onClick={this.showProfile.bind(this)}
               variant="outline-light"
             >
-              Chat Room
+              Profile
             </Button>
           </li>
         </ul>

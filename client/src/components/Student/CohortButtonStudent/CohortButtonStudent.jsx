@@ -4,19 +4,23 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import OneCohortButtonStudent from "../OneCohortButtonStudent/OneCohortButtonStudent.jsx";
 import axios from "axios";
-import $ from "jquery";
+import $, { data } from "jquery";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 class CohortButtonStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       data: [],
-      cohort: 1,
+      cohort: null,
     };
   }
   async componentWillMount() {
-    await axios.get("/UserData").then((data) => {
-      this.setState({ data: data.data });
+    let data = await axios.get("/UserData");
+    this.setState({ data: data.data });
+    let current = await axios.post("/GetUser", {
+      fullName: localStorage.fullName,
     });
+    this.setState({ cohort: current.data.cohort });
     console.log(this.state);
   }
   render() {
