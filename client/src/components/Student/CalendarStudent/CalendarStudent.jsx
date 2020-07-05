@@ -3,7 +3,7 @@ import axios from "axios";
 import $ from "jquery";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
-import "./Calendar.css";
+import "./CalendarStudent.css";
 import {
   MDBListGroup,
   MDBListGroupItem,
@@ -13,7 +13,7 @@ import {
   MDBFormInline,
   MDBBtn,
 } from "mdbreact";
-class Calendar extends React.Component {
+class CalendarStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -90,7 +90,7 @@ class Calendar extends React.Component {
     //   // console.log(res);
     //   // console.log(res.data);
     // });
-    axios.post("/DeleteCalendar");
+    axios.post('/DeleteCalendar')
   }
   async componentDidUpdate(prevState) {
     if (prevState.validity !== this.state.validity) {
@@ -207,4 +207,4 @@ class Calendar extends React.Component {
   }
 }
 
-export default Calendar;
+export default CalendarStudent;

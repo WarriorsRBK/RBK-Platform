@@ -22,6 +22,7 @@ const Article = (props) => {
             src={props.article.urlToImage}
             top
             alt="sample photo"
+            className="images"
           />
           <MDBCardBody cascade className="text-center">
             <a className="text-muted">

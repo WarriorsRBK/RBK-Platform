@@ -4,6 +4,7 @@ import Home from "../Home/Home.jsx";
 import Navbar from "../ADMIN/Navbar/Navbar.jsx";
 import StudentNavbar from "../Student/UserNavbarStudent/UserNavbarStudent.jsx";
 import HIRNavbar from "../HIR/UserNavbarHIR/UserNavbarHIR.jsx";
+import AnimatedBg from "react-animated-bg";
 export default function App() {
   if (!localStorage.fullName) {
     return (
