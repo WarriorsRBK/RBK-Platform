@@ -10,6 +10,9 @@ class UserProfile extends React.Component {
       image: "./male.jpg",
     };
   }
+  /**
+   * @function componentWillMount that handles the user infos and also handle the photo of the user profile depending on the gender
+   */
   componentWillMount() {
     for (let i = 0; i < this.props.profiles.length; i++) {
       if (this.props.profiles[i].fullName === this.props.fullName) {
