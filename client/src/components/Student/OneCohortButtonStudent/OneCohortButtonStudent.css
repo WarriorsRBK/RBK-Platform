@@ -1,0 +1,13 @@
+.hirs,
+.students {
+  margin-top: 10px;
+}
+#cohortButt {
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: 100%;
+}
+#left {
+  margin-left: -40px;
+}

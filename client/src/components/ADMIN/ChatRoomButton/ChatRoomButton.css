@@ -1,5 +1,6 @@
 #ChatRoomButton {
   margin: auto;
   margin-bottom: 10px;
-  width: 200px;
+  margin-top: 10px;
+  min-width: 380px;
 }

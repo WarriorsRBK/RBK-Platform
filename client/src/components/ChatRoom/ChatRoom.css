@@ -1,5 +1,5 @@
 divMessage {
-    border: 2px solid #dedede;
+  border: 2px solid #dedede;
   background-color: #f1f1f1;
   border-radius: 5px;
   padding: 10px;
@@ -11,3 +11,17 @@ divMessage {
     clear: both;
     display: table;
   } */
+#chatBoxRoom {
+  max-height: 600px;
+  scroll-behavior: smooth;
+}
+#chatContain {
+  height: 50%;
+  width: 50%;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: auto;
+  position: relative;
+  top: 20%;
+  left: -10%;
+}

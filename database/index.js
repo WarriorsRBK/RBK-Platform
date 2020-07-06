@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const Schema = mongoose.Schema;
 mongoose.connect("mongodb://localhost:27017/RBK", {
   useNewUrlParser: true,
@@ -6,20 +7,23 @@ mongoose.connect("mongodb://localhost:27017/RBK", {
 });
 let usersSchema = new Schema({
   fullName: { type: String, unique: true },
+  userName: String,
   email: String,
   password: String,
   role: String,
   cohort: Number,
   Gender: String,
+  RedPins: Number,
+  YellowPins: Number,
+  BluePins: Number,
 });
 
 exports.RBK = mongoose.model("RBK", usersSchema);
 
 let chatRoomSchema = new Schema({
   message: String,
-  messageSender: String,
-  messageSenderCohort: Number,
-  messageSenderRole: String,
+  name: String,
+  role: String,
   createdAt: String,
 });
 
@@ -33,22 +37,14 @@ exports.COHORT = mongoose.model("COHORTS", cohortSchema);
 
 let CalendarSchema = new Schema({
   value: String,
+  startTime: String,
+  endTime: String,
 });
 
 exports.CALENDAR = mongoose.model("CALENDAR", CalendarSchema);
 
-let pinnedBoard = new Schema({
-  fullName: String,
-  redPin: Number,
-  bluePin: Number,
-  yellowPin: Number,
-  cohort: String,  
-})
-
-exports.PINNEDBOARD = mongoose.model("PINNEDBOARD", pinnedBoard)
 let onlineUsersSchema = mongoose.Schema({
-  fullName: String,
-  password: String,
+  fullName: { type: String, unique: true },
   role: String,
 });
 
