@@ -15,7 +15,6 @@ class ChatRoomButton extends React.Component {
   showChatRoom() {
     ReactDOM.render(<ChatRoom />, document.getElementById("interface"));
   }
-
   render() {
     return (
       <div>
