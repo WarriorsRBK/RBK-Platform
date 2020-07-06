@@ -18,7 +18,9 @@ class ProfileButtonStudent extends React.Component {
       document.getElementById("interface")
     );
   }
-
+/**
+ * 
+ */
   render() {
     return (
       <div>
