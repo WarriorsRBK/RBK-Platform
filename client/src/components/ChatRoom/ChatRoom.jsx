@@ -4,8 +4,10 @@ import io from "socket.io-client";
 import "./ChatRoom.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
-
+import $ from 'jquery'
 const socket = io.connect("http://localhost:3000");
+
+
 
 class Chat extends Component {
   constructor() {
@@ -16,6 +18,7 @@ class Chat extends Component {
       name: localStorage.fullName,
       role: "HIR",
       createdAt: "",
+     
     };
   }
   /**
@@ -27,6 +30,7 @@ class Chat extends Component {
         chat: [...this.state.chat, { name, role, message, createdAt }],
       });
     });
+    
   }
   /**
    * @function componentWillMount that gets the data from  the database and set it to the state
@@ -45,6 +49,10 @@ class Chat extends Component {
   onTextChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
     this.setState({ createdAt: new Date().toLocaleString() });
+    socket.on("typing", function (data) {
+      $('.typing').text =
+        "<p><em>" + data + " is typing a message...</em></p>";
+    });
   };
   /**
    * @function onMessageSubmit that depends on a click it takes the user input along with his name and date and send it to
@@ -61,6 +69,7 @@ class Chat extends Component {
    */
   componentDidUpdate() {
     $("#chatBoxRoom").scrollTop($("#chatBoxRoom")[0].scrollHeight);
+    
   }
   /**
    * @function checkRole that cheks for the user in order to send a different msg with a different color
@@ -100,6 +109,9 @@ class Chat extends Component {
       </div>
     ));
   }
+
+
+  
   render() {
     return (
       <div id="chatContain">
@@ -122,14 +134,7 @@ class Chat extends Component {
           {this.renderChat()}
         </div>
         <div style={{ textAlign: "center" }}>
-          {/* <span>name</span>
-          <input
-            name="name"
-            onChange={(e) => this.onTextChange(e)}
-            value={this.state.name}
-          /> */}
-
-          {/* {localStorage.fullName} */}
+          
           <div
             className="input-group mb-3"
             style={{ width: "55%", margin: "0 auto" }}
@@ -155,6 +160,7 @@ class Chat extends Component {
             </div>
           </div>
         </div>
+        <div className='typing'></div>
       </div>
     );
   }
