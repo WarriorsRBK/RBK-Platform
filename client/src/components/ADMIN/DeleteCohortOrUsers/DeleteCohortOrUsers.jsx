@@ -9,11 +9,17 @@ class DeleteCohortOrUsers extends React.Component {
       UserData: [],
     };
   }
+  /**
+   * @function componentDidUpdate that makes some css changes on some elements when ever the component  update
+   */
   componentDidUpdate() {
     document.getElementById("Users").style.display = "none";
     document.getElementById("cohorts").style.display = "none";
     this.chooseCohortOrUser();
   }
+  /**
+   * @function componentWillMount that gets gets the userData and the cohortsData from the database
+   */
   componentWillMount() {
     fetch("http://localhost:3000/CohortData")
       .then((res) => res.json())
@@ -24,6 +30,9 @@ class DeleteCohortOrUsers extends React.Component {
       .then((UserData) => this.setState({ UserData }))
       .catch((err) => console.log(err));
   }
+  /**
+   * @function chooseCohortOrUser that display which one the user choose and block the other one
+   */
   chooseCohortOrUser() {
     // const input = document.getElementById("select").value;
     if (this.props.delete === "Cohort") {
@@ -34,6 +43,9 @@ class DeleteCohortOrUsers extends React.Component {
       document.getElementById("Users").style.display = "block";
     }
   }
+  /**
+   * @function deleteUserFromDataBase that takes the userName from the input and deletes it from the dataBase
+   */
   deleteUserFromDataBase() {
     const { UserData } = this.state;
     // console.log(UserData);
@@ -55,6 +67,9 @@ class DeleteCohortOrUsers extends React.Component {
       return;
     }
   }
+  /**
+   * @function deleteCohortFromDataBase that takes the cohortNumber from the input and deletes it from the dataBase
+   */
   deleteCohortFromDataBase() {
     var input = document.getElementById("selectCohortNumber").value;
     // console.log(input);
@@ -66,42 +81,38 @@ class DeleteCohortOrUsers extends React.Component {
 
   render() {
     return (
-      <div>
-        <div id="centerAll">
-          <div id="cohorts">
-            cohorts
-            <div>
-              <select id="selectCohortNumber">
-                {this.state.cohort.map((elem, index) => {
-                  return <option key={index}>{elem.cohortNumber}</option>;
-                })}
-              </select>
-              <br />
-              <button onClick={this.deleteCohortFromDataBase.bind(this)}>
-                Delete
-              </button>
-            </div>
-          </div>
-          <div id="Users">
-            users
-            <div>
-              <input id="UserNameInput" placeholder="UserFullName"></input>
-              <br />
-              <button onClick={this.deleteUserFromDataBase.bind(this)}>
-                Delete
-              </button>
-            </div>
-          </div>
-          <div id="ShowAndHide">
-            <div>Delete User or Cohort</div>
-            <select id="select">
-              <option>User</option>
-              <option>Cohort</option>
+      <div id="centerAll">
+        <div id="cohorts">
+          <div>
+            <select id="selectCohortNumber">
+              {this.state.cohort.map((elem, index) => {
+                return <option key={index}>{elem.cohortNumber}</option>;
+              })}
             </select>
             <br />
-            <button onClick={this.chooseCohortOrUser.bind(this)}>Next</button>
-            <div className="YouChoose"></div>
+            <button onClick={this.deleteCohortFromDataBase.bind(this)}>
+              Delete
+            </button>
           </div>
+        </div>
+        <div id="Users">
+          <div>
+            <input id="UserNameInput" placeholder="UserFullName"></input>
+            <br />
+            <button onClick={this.deleteUserFromDataBase.bind(this)}>
+              Delete
+            </button>
+          </div>
+        </div>
+        <div id="ShowAndHide">
+          <div>Delete User or Cohort</div>
+          <select id="select">
+            <option>User</option>
+            <option>Cohort</option>
+          </select>
+          <br />
+          <button onClick={this.chooseCohortOrUser.bind(this)}>Next</button>
+          <div className="YouChoose"></div>
         </div>
       </div>
     );

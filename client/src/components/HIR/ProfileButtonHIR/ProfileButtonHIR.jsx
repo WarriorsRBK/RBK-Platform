@@ -3,14 +3,18 @@ import ReactDOM from "react-dom";
 import "./ProfileButtonHIR.css";
 import Button from "react-bootstrap/Button";
 import UserProfileHIR from "../../HIR/UserProfileHIR/UserProfileHIR.jsx";
-
+import axios from "axios";
 class ProfileButtonHIR extends React.Component {
   constructor(props) {
     super(props);
   }
-  showProfile() {
+  async showProfile() {
+    let profile = await axios.post("/GetUser", {
+      fullName: localStorage.fullName,
+    });
+    ReactDOM.unmountComponentAtNode(document.getElementById("interface"));
     ReactDOM.render(
-      <UserProfileHIR profile={this.props.profile} />,
+      <UserProfileHIR profile={profile.data} />,
       document.getElementById("interface")
     );
   }

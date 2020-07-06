@@ -14,6 +14,9 @@ class CohortsButton extends React.Component {
       data: [],
     };
   }
+  /**
+   * @function componentWillMount that gets the userData and the cohortData from the database
+   */
   componentWillMount() {
     axios.get("/CohortData").then((data) => {
       this.setState({ cohorts: data.data });
@@ -22,6 +25,9 @@ class CohortsButton extends React.Component {
       this.setState({ data: data.data });
     });
   }
+  /**
+   *@function showChildren that depending on the state it shows or hide the cohorts
+   */
   showChildren() {
     if (!this.state.children) {
       $(".cohortsItems").show(500);

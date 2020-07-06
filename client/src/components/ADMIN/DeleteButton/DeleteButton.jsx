@@ -12,6 +12,9 @@ class DeleteButton extends React.Component {
       children: false,
     };
   }
+  /**
+   * @function showChildren depending on the state it will show or hide some components
+   */
   showChildren() {
     if (!this.state.children) {
       $("#deleteAccountItem").show(500);
@@ -23,12 +26,18 @@ class DeleteButton extends React.Component {
       this.setState({ children: false });
     }
   }
+  /**
+   * @function showDeleteAccount that will render the  deleteAccount component
+   */
   showDeleteAccount() {
     ReactDOM.render(
       <DeleteCohortOrUser delete={"user"} />,
       document.getElementById("interface")
     );
   }
+  /**
+   * @function showDeleteCohort that will render the deleteCohort component
+   */
   showDeleteCohort() {
     ReactDOM.render(
       <DeleteCohortOrUser delete={"Cohort"} />,

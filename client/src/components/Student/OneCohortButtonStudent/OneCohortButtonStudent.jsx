@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import $ from "jquery";
 import UserProfileStudent from "../UserProfileStudent/UserProfileStudent.jsx";
 import ReactDOM from "react-dom";
+import axios from "axios";
 
 class OneCohortButtonStudent extends React.Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class OneCohortButtonStudent extends React.Component {
       students: false,
       data: [],
     };
-    console.log(this.props);
   }
   showChildren() {
     if (!this.state.children) {
@@ -36,34 +36,37 @@ class OneCohortButtonStudent extends React.Component {
       this.setState({ students: false });
     }
   }
-  // componentDidUpdate() {
-  //   if (!this.props.visibility || !this.state.children) {
-  //     $(`#students${this.props.id}`).hide(500);
-  //     $(`#hirs${this.props.id}`).hide(500);
-  //     $(`#parenthirs${this.props.id}`).hide(500);
-  //     $(`#parentstudents${this.props.id}`).hide(500);
-  //     // this.state.children = false;
-  //     // this.state.students = false;
-  //     // this.state.hirs = false;
-  //   }
-  // }
+  componentDidUpdate() {
+    if (!this.state.children) {
+      $(`#students${this.props.id}`).hide(500);
+      $(`#hirs${this.props.id}`).hide(500);
+      $(`#parenthirs${this.props.id}`).hide(500);
+      $(`#parentstudents${this.props.id}`).hide(500);
+      this.state.students = false;
+      this.state.hirs = false;
+    }
+  }
   showHirs() {
     if (!this.state.hirs) {
       $(`#parenthirs${this.props.id}`).show(500);
       this.setState({ hirs: true });
     } else {
       $(`#parenthirs${this.props.id}`).hide(500);
-      this.setState({ nirs: false });
+      this.setState({ hirs: false });
     }
   }
-  showProfile(e) {
+  async showProfile(e) {
     const fullName = e.target.innerText;
-    console.log(fullName);
+    let profile = await axios.post("/GetUser", { fullName });
     ReactDOM.unmountComponentAtNode(document.getElementById("interface"));
     ReactDOM.render(
-      <UserProfileStudent fullName={fullName} profiles={this.props.data} />,
+      <UserProfileStudent fullName={fullName} profile={profile.data} />,
       document.getElementById("interface")
     );
+  }
+  async componentWillMount() {
+    let online = await axios.post("/loggedUsers");
+    this.setState({ online: online.data });
   }
   componentDidMount() {
     $(`#parentstudents${this.props.id}`).css("display", "none");
@@ -95,7 +98,8 @@ class OneCohortButtonStudent extends React.Component {
                   {this.props.data.map((element, index) => {
                     if (
                       element.cohort === this.props.id &&
-                      element.role === "HIR"
+                      element.role === "HIR" &&
+                      element.fullName !== localStorage.fullName
                     ) {
                       return (
                         <li key={index} className="hirs">
@@ -105,6 +109,11 @@ class OneCohortButtonStudent extends React.Component {
                             block
                           >
                             <div className="onlinecheck" />
+                            {this.state.online.includes(element.fullName) ? (
+                              <div className="green"></div>
+                            ) : (
+                              <div className="red"></div>
+                            )}
                             {element.fullName}
                           </Button>
                         </li>
@@ -123,7 +132,8 @@ class OneCohortButtonStudent extends React.Component {
                   {this.props.data.map((element, index) => {
                     if (
                       element.cohort === this.props.id &&
-                      element.role === "Student"
+                      element.role === "Student" &&
+                      element.fullName !== localStorage.fullName
                     ) {
                       return (
                         <li key={index} className="students">
@@ -133,6 +143,11 @@ class OneCohortButtonStudent extends React.Component {
                             block
                           >
                             <div className="onlinecheck" />
+                            {this.state.online.includes(element.fullName) ? (
+                              <div className="green"></div>
+                            ) : (
+                              <div className="red"></div>
+                            )}
                             {element.fullName}
                           </Button>
                         </li>

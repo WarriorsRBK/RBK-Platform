@@ -1,4 +1,4 @@
-divMessage {
+.divMessage {
   border: 2px solid #dedede;
   background-color: #f1f1f1;
   border-radius: 5px;
@@ -14,4 +14,14 @@ divMessage {
 #chatBoxRoom {
   max-height: 600px;
   scroll-behavior: smooth;
+}
+#chatContain {
+  height: 50%;
+  width: 50%;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: auto;
+  position: relative;
+  top: 20%;
+  left: -10%;
 }

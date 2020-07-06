@@ -1,5 +1,9 @@
 #CreateCohortInput {
   display: inline-block;
+  background-color: transparent;
+  color: black;
+}
+::placeholder {
   color: black;
 }
 #outerDiv {
@@ -9,12 +13,13 @@
   height: 280px;
   margin: auto;
   position: relative;
-  top: 20%;
+  top: 30%;
+  left: -15%;
 }
 #createCohortDiv {
   margin: auto;
   position: relative;
   top: 24%;
-  left: 3%;
+  left: -5%;
   width: 40%;
 }

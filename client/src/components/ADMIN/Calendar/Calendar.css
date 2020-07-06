@@ -1,8 +1,12 @@
 #calendarBox {
-  max-width: 150%;
-  max-height: 150%;
+  max-width: 60%;
+  max-height: 70%;
   border: 2px solid black;
   border-radius: 10px;
+  position: relative;
+  margin: auto;
+  left: -5%;
+  top: 10%;
 }
 
 #startTime {
@@ -23,9 +27,10 @@
   margin-bottom: 50px;
   overflow-y: scroll;
   /* border: 1px solid gray; */
-  scroll-snap-type: mandatory;
+  /* scroll-snap-type: mandatory;
   scroll-snap-points-y: repeat(3rem);
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y mandatory; */
+  scroll-behavior: smooth;
 }
 
 .listItemCalendar {

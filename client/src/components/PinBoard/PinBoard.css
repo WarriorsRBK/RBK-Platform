@@ -15,5 +15,26 @@
   background-color: black;
 }
 #tableOfPins {
-  width: 40%;
+  width: 70%;
+  height: 70%;
+  margin-top: 25px;
+}
+#boardContain {
+  width: 50%;
+  height: 40%;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: auto;
+  position: relative;
+  left: -10%;
+  top: 23%;
+}
+#red {
+  color: red;
+}
+#yellow {
+  color: yellow;
+}
+#blue {
+  color: blue;
 }

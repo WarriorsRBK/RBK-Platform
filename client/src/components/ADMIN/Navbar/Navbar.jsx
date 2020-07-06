@@ -5,7 +5,7 @@ import CreateButton from "../CreateButton/CreateButton.jsx";
 import DeleteButton from "../DeleteButton/DeleteButton.jsx";
 import CohortsButton from "../CohortsButton/CohortsButton.jsx";
 import ChatRoomButton from "../ChatRoomButton/ChatRoomButton.jsx";
-
+import LogoutButton from "../../LogoutButton/LogoutButton.jsx";
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +13,11 @@ class Navbar extends React.Component {
       hover: true,
     };
   }
-
+  /**
+   * @function showNav
+   * @function hiedNav   all of these functions handle some jquery animations on the NavBar
+   * @function fixNav
+   */
   showNav() {
     $("#container").animate({ left: "0" }, 1000);
     $("#arrow").css("transform", "rotate(180deg)");
@@ -45,7 +49,7 @@ class Navbar extends React.Component {
               <img
                 onClick={this.fixNav.bind(this)}
                 id="arrow"
-                src="./arr.png"
+                src="./arr2.png"
               ></img>
             </center>
           </div>
@@ -57,6 +61,7 @@ class Navbar extends React.Component {
             <DeleteButton />
             <CohortsButton />
             <ChatRoomButton />
+            <LogoutButton />
           </div>
         </div>
         <div id="interface"></div>

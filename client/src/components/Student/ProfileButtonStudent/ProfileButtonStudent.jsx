@@ -3,15 +3,18 @@ import ReactDOM from "react-dom";
 import "./ProfileButtonStudent.css";
 import Button from "react-bootstrap/Button";
 import UserProfileStudent from "../UserProfileStudent/UserProfileStudent.jsx";
-
+import axios from "axios";
 class ProfileButtonStudent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
-  showChatRoom() {
+  async showProfile() {
+    let profile = await axios.post("/GetUser", {
+      fullName: localStorage.fullName,
+    });
+    ReactDOM.unmountComponentAtNode(document.getElementById("interface"));
     ReactDOM.render(
-      <UserProfileStudent />,
+      <UserProfileStudent profile={profile.data} />,
       document.getElementById("interface")
     );
   }
@@ -23,10 +26,10 @@ class ProfileButtonStudent extends React.Component {
           <li>
             <Button
               id="ChatRoomButton"
-              onClick={this.showChatRoom.bind(this)}
+              onClick={this.showProfile.bind(this)}
               variant="outline-light"
             >
-              Chat Room
+              Profile
             </Button>
           </li>
         </ul>

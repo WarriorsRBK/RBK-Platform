@@ -44,7 +44,7 @@ let CalendarSchema = new Schema({
 exports.CALENDAR = mongoose.model("CALENDAR", CalendarSchema);
 
 let onlineUsersSchema = mongoose.Schema({
-  fullName: String,
+  fullName: { type: String, unique: true },
   role: String,
 });
 

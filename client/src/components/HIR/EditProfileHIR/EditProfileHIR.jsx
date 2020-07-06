@@ -1,6 +1,8 @@
 import React from "react";
 import "./EditProfileHIR.css";
 import axios from "axios";
+import ReactDOM from "react-dom";
+import UserProfileHIR from "../UserProfileHIR/UserProfileHIR.jsx";
 import $ from "jquery";
 import { Button } from "react-bootstrap";
 class EditProfileHIR extends React.Component {
@@ -16,7 +18,7 @@ class EditProfileHIR extends React.Component {
     let data = await axios.post("/GetUser", { fullName });
     this.setState({ data: data.data });
   }
-  saveChanges() {
+  async saveChanges() {
     let elements = $(".inputs");
     let obj = {};
     for (let i = 0; i < elements.length; i++) {
@@ -25,6 +27,7 @@ class EditProfileHIR extends React.Component {
       }
       if (elements[i].id === "fullName") {
         if (elements[i].value) {
+          console.log("changed FullName");
           localStorage.fullName = elements[i].value;
         }
       }
@@ -34,6 +37,15 @@ class EditProfileHIR extends React.Component {
     $("#myModal").css("display", "none");
     $("#profilecontainer").css("filter", "");
     $("#profilecontainer").css("-webkit-filter", "");
+    let data = await axios.post("/GetUser", {
+      fullName: localStorage.fullName,
+    });
+    this.setState({ data: data.data });
+    ReactDOM.unmountComponentAtNode(document.getElementById("interface"));
+    ReactDOM.render(
+      <UserProfileHIR profile={this.state.data} />,
+      document.getElementById("interface")
+    );
   }
   render() {
     return (
