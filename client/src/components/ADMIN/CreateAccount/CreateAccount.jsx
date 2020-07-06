@@ -11,6 +11,10 @@ class CreateAccount extends React.Component {
       UserData: [],
     };
   }
+  /**
+   * @function checkforUser that checks if the userName already exists in the dataBase
+   * @param {newUserName} newUserName
+   */
   checkforUser(newUserName) {
     const { data } = this.state;
     for (var i = 0; i < data.length; i++) {
@@ -20,6 +24,10 @@ class CreateAccount extends React.Component {
       }
     }
   }
+  /**
+   * @function submitNewUser that takes the data the Admin entered and creates a new account for
+   *  that user with a generated password depending on some details
+   */
   submitNewUser() {
     const { UserData } = this.state;
 
@@ -30,7 +38,11 @@ class CreateAccount extends React.Component {
     var data4 = document.getElementById("select1").value;
     var data5 = document.getElementById("select2").value;
     var data6 = document.getElementById("select3").value;
-    var defaultPassword = "Cohort" + data5 + data4;
+    if (data4 === "ADMIN") {
+      var defaultPassword = "ADMINadmin";
+    } else {
+      var defaultPassword = "Cohort" + data5 + data4;
+    }
     for (var i = 0; i < UserData.length; i++) {
       if (UserData[i].userName.toLowerCase() === data1.toLowerCase()) {
         alert("insert a new fullName pls!!");
@@ -81,6 +93,11 @@ class CreateAccount extends React.Component {
   //     }
   //   }
   // }
+  /**
+   * @function addDataToDataBase that takes the data entered by the admin and send a req to the server to add it to database
+   * @param {obj} content containes the user data
+   *
+   */
   addDataToDataBase(content) {
     fetch("http://localhost:3000/UserCreation", {
       method: "post",
@@ -100,6 +117,9 @@ class CreateAccount extends React.Component {
   //     .then(() => console.log(this.state.CohortNumber))
   //     .catch((err) => console.log(err));
   // }
+  /**
+   * @function componentWillMount that gets the userData and the cohortData from the dataBase and set it to  the state
+   */
   componentWillMount() {
     fetch("http://localhost:3000/CohortData")
       .then((res) => res.json())

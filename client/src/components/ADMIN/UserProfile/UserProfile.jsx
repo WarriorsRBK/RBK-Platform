@@ -10,6 +10,9 @@ class UserProfile extends React.Component {
       image: "./male.jpg",
     };
   }
+  /**
+   * @function componentWillMount that handles the user infos and also handle the photo of the user profile depending on the gender
+   */
   componentWillMount() {
     for (let i = 0; i < this.props.profiles.length; i++) {
       if (this.props.profiles[i].fullName === this.props.fullName) {
@@ -23,22 +26,31 @@ class UserProfile extends React.Component {
   }
   render() {
     return (
-      <div id="profilecontainer">
+      <div id="profilecontainer2">
         <Container>
           <Row>
             <Col className="picture" sm="2">
-              <img className='profilesPictures' src={this.state.image}></img>
+              <img className="profilesPictures" src={this.state.image}></img>
             </Col>
             <Col className="profile" sm="10">
-              <p className='userProfilePara'>FullName: {this.state.profile.fullName}</p>
-              <p className='userProfilePara'>Gender: {this.state.profile.Gender}</p>
-              <p className='userProfilePara'>Cohort: {this.state.profile.cohort} </p>
-              <p className='userProfilePara'> Role: {this.state.profile.role} </p>
-              <p className='userProfilePara'> E-mail: {this.state.profile.email} </p>
+              <p className="userProfilePara">
+                FullName: {this.state.profile.fullName}
+              </p>
+              <p className="userProfilePara">
+                Gender: {this.state.profile.Gender}
+              </p>
+              <p className="userProfilePara">
+                Cohort: {this.state.profile.cohort}{" "}
+              </p>
+              <p className="userProfilePara">
+                {" "}
+                Role: {this.state.profile.role}{" "}
+              </p>
+              <p className="userProfilePara">
+                {" "}
+                E-mail: {this.state.profile.email}{" "}
+              </p>
             </Col>
-          </Row>
-          <Row>
-            <Col className="info" sm="12"></Col>
           </Row>
         </Container>
       </div>

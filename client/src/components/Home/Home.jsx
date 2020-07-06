@@ -9,7 +9,7 @@ class Home extends React.Component {
     $("#homediv").css("filter", "blur(8px)");
     $("#homediv").css("-webkit-filter", "blur(8px)");
     $("#aa1").css("display", "block");
-    var span = $(".close")[0];
+    var span = $(".close2")[0];
     span.onclick = () => {
       $("#aa1").css("display", "none");
       $("#homediv").css("filter", "");
@@ -307,7 +307,7 @@ class Home extends React.Component {
         <div id="extra">
           <div id="aa1" className="aa2">
             <div className="aa3">
-              <span className="close">&times;</span>
+              <span className="close2">&times;</span>
               <Login />
             </div>
           </div>

@@ -8,6 +8,10 @@ class CreateCohort extends React.Component {
       data: [],
     };
   }
+  /**
+   * @function addNewDataToDataBase that sends a req to server with the newCohort number
+   * @param {Number} content new cohort number
+   */
   addNewDataToDataBase(content) {
     fetch("http://localhost:3000/CohortCreation", {
       method: "post",
@@ -19,6 +23,9 @@ class CreateCohort extends React.Component {
     // ReactDOM.unmountComponentAtNode(document.getElementById("app"));
     // ReactDOM.render(<App />, document.getElementById("app"));
   }
+  /**
+   * @function componentDidMount that gets data from the database and set it to the state
+   */
   componentDidMount() {
     fetch("http://localhost:3000/CohortData")
       .then((res) => res.json())
@@ -26,6 +33,10 @@ class CreateCohort extends React.Component {
       //   .then(() => console.log(this.state.data))
       .catch((err) => console.log(err));
   }
+  /**
+   * @function submitNewCohortNumber that cheks if the cohort number already exists and then if not creates
+   * a new cohort for the admin depending on the number he entered
+   */
   submitNewCohortNumber() {
     const { data } = this.state;
     var number = document.getElementById("CreateCohortInput").value;

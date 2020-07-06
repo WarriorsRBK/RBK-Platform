@@ -90,7 +90,7 @@ class CalendarStudent extends React.Component {
     //   // console.log(res);
     //   // console.log(res.data);
     // });
-    axios.post('/DeleteCalendar')
+    axios.post("/DeleteCalendar");
   }
   async componentDidUpdate(prevState) {
     if (prevState.validity !== this.state.validity) {
@@ -106,102 +106,37 @@ class CalendarStudent extends React.Component {
     //   $("#todosID").show();
     // }
     return (
-      <div id="calendarBox" style={{ textAlign: "center" }}>
-        <form onSubmit={this.handleSubmit} className="form-horizontal">
-          <label>
-            <h1 style={{ marginTop: "25px" }}>
-              <span style={{ color: "#0066ff" }}>Today's Calendar</span>
-            </h1>
-            <input
-              id="todoText"
-              className="form-control mr-sm-2"
-              type="text"
-              placeholder="Add to calendar..."
-              aria-label="Add to calendar..."
-              type="textarea"
-              icon="pencil-alt"
-              rows="2"
-              required
-            />
-            <input
-              id="startTime"
-              className="form-control mr-sm-2"
-              type="text"
-              placeholder="startTime"
-              aria-label="startTime"
-              type="number"
-              icon="pencil-alt"
-              rows="2"
-              required
-            />
-            <input
-              id="endTime"
-              className="form-control mr-sm-2"
-              type="text"
-              placeholder="endTime"
-              aria-label="endTime"
-              type="number"
-              icon="pencil-alt"
-              rows="2"
-              required
-            />
-          </label>
+      <div id="calendarBox2" style={{ textAlign: "center" }}>
+        <label>
+          <h1 style={{ marginTop: "25px" }}>
+            <span style={{ color: "#0066ff" }}>Today's Calendar</span>
+          </h1>
+        </label>
 
-          <input
-            type="submit"
-            value="Submit"
-            placeholder="Add an event..."
-            onClick={this.handleClick}
-            className="btn btn-success"
-          />
-          <button onClick={this.clearList}>Clear List</button>
-        </form>
-        <div id="CalendarContainerfixer">
-          <ul
-            style={{
-              borderStyle: "solid",
-              borderWidth: "5px",
-              marginRight: "15%",
-              marginLeft: "15%",
-              borderRadius: "8px",
-            }}
-            className="rounded-sm"
-            id="todosID"
-          >
-            {this.state.todos.map((todo, i) => {
-              return (
-                <div
-                  className="listItemCalendar"
-                  key={i}
-                  style={{ textAlign: "center", position: "relative" }}
-                >
-                  <MDBListGroupItem
-                    color="secondary"
-                    key={todo["_id"]}
-                    className="my-4 mx-4"
-                    style={{ listStyleType: "none" }}
-                    key={todo["_id"]}
-                  >
-                    <div>
-                      from {todo.startTime} to {todo.endTime}
-                    </div>
-                    <div id="todoValuefor"> {todo.value}</div>
-                    <button
-                      id="DeleteCalendarBlog"
-                      className="btn btn-danger"
-                      key={todo["_id"]}
-                      onClick={this.deleteItem.bind(this, todo["_id"])}
-                    >
-                      Delete
-                    </button>
-
-                    <hr></hr>
-                  </MDBListGroupItem>
+        {this.state.todos.map((todo, i) => {
+          return (
+            <div
+              className="listItemCalendar"
+              key={i}
+              style={{ textAlign: "center", position: "relative" }}
+            >
+              <MDBListGroupItem
+                color="secondary"
+                key={todo["_id"]}
+                className="my-4 mx-4"
+                style={{ listStyleType: "none" }}
+                key={todo["_id"]}
+              >
+                <div>
+                  from {todo.startTime} to {todo.endTime}
                 </div>
-              );
-            })}
-          </ul>
-        </div>
+                <div id="todoValuefor"> {todo.value}</div>
+
+                <hr></hr>
+              </MDBListGroupItem>
+            </div>
+          );
+        })}
       </div>
     );
   }

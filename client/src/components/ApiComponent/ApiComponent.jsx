@@ -10,6 +10,9 @@ export default class ApiComponent extends Component {
       news: [],
     };
   }
+  /**
+   * @function componentDidMount that gets the data back from the server from  an other API and set that data to the state
+   */
   async componentDidMount() {
     let data = await Axios.get("/getAPI");
     this.setState({ news: data.data });

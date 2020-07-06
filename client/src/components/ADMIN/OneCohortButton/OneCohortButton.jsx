@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import $ from "jquery";
 import UserProfile from "../UserProfile/UserProfile.jsx";
 import ReactDOM from "react-dom";
-
+import axios from "axios";
 class OneCohortButton extends React.Component {
   constructor(props) {
     super(props);
@@ -13,8 +13,12 @@ class OneCohortButton extends React.Component {
       hirs: false,
       students: false,
       data: [],
+      online: [],
     };
   }
+  /**
+   * @function showChildren depending on the state it will show or hide some components
+   */
   showChildren() {
     if (!this.state.children) {
       $(`#students${this.props.id}`).show(500);
@@ -26,6 +30,9 @@ class OneCohortButton extends React.Component {
       this.setState({ children: false });
     }
   }
+  /**
+   * @function showStudents depending on the state it will show or hide some components
+   */
   showStudents() {
     if (!this.state.students) {
       $(`#parentstudents${this.props.id}`).show(500);
@@ -35,6 +42,9 @@ class OneCohortButton extends React.Component {
       this.setState({ students: false });
     }
   }
+  /**
+   * @function componentDidUpdate depending on the state it will show or hide some components
+   */
   componentDidUpdate() {
     if (!this.props.visibility || !this.state.children) {
       $(`#students${this.props.id}`).hide(500);
@@ -46,6 +56,9 @@ class OneCohortButton extends React.Component {
       this.state.hirs = false;
     }
   }
+  /**
+   * @function showHirs depending on the state it will show or hide some components
+   */
   showHirs() {
     if (!this.state.students) {
       $(`#parenthirs${this.props.id}`).show(500);
@@ -55,6 +68,10 @@ class OneCohortButton extends React.Component {
       this.setState({ students: false });
     }
   }
+  /**
+   * @function showProfile that render the profiles depending on the user's fullName
+   * @param {obj} e that contains the user data
+   */
   showProfile(e) {
     const fullName = e.target.innerText;
     ReactDOM.unmountComponentAtNode(document.getElementById("interface"));
@@ -63,20 +80,29 @@ class OneCohortButton extends React.Component {
       document.getElementById("interface")
     );
   }
-  componentDidMount() {
+  /**
+   * @function componentDidMount that containe some jquery animations to hide and show elements and components 
+   */
+  async componentDidMount() {
     $(`#parentstudents${this.props.id}`).css("display", "none");
     $(`#parenthirs${this.props.id}`).css("display", "none");
     $(`#students${this.props.id}`).css("display", "none");
     $(`#hirs${this.props.id}`).css("display", "none");
     $(`#students${this.props.id}`).css("margin-top", "10px");
     $(`#hirs${this.props.id}`).css("margin-top", "10px");
+    let online = await axios.post("/loggedUsers");
+    this.setState({ online: online.data });
   }
   render() {
     return (
       <div>
         <ul>
           <li id={`cohort${this.props.id}`}>
-            <Button id='cohortNumberButton' variant="light" onClick={this.showChildren.bind(this)}>
+            <Button
+              id="cohortNumberButton"
+              variant="light"
+              onClick={this.showChildren.bind(this)}
+            >
               Cohort {this.props.id}
             </Button>
 
@@ -98,9 +124,15 @@ class OneCohortButton extends React.Component {
                         <li key={index} className="hirs">
                           <Button
                             onClick={this.showProfile.bind(this)}
-                            variant="light"
+                            variant="outline-light"
                             block
                           >
+                            <div className="onlinecheck" />
+                            {this.state.online.includes(element.fullName) ? (
+                              <div className="green"></div>
+                            ) : (
+                              <div className="red"></div>
+                            )}
                             {element.fullName}
                           </Button>
                         </li>
@@ -125,12 +157,18 @@ class OneCohortButton extends React.Component {
                       element.role === "Student"
                     ) {
                       return (
-                        <li key={index} className="students">
+                        <li key={index} className="hirs">
                           <Button
                             onClick={this.showProfile.bind(this)}
-                            variant="light"
+                            variant="outline-light"
                             block
                           >
+                            <div className="onlinecheck" />
+                            {this.state.online.includes(element.fullName) ? (
+                              <div className="green"></div>
+                            ) : (
+                              <div className="red"></div>
+                            )}
                             {element.fullName}
                           </Button>
                         </li>

@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import "../../HIR/UserNavbarHIR/UserNavbarHIR.css";
 import $ from "jquery";
 import CohortButtonStudent from "../CohortButtonStudent/CohortButtonStudent.jsx";
@@ -7,6 +8,8 @@ import ProfileButtonStudent from "../ProfileButtonStudent/ProfileButtonStudent.j
 import LogoutButton from "../../LogoutButton/LogoutButton.jsx";
 import axios from "axios";
 import PinBoardButtonStudent from "../PinBoardButton/PinBoardButton.jsx";
+import CalendarButtonStudent from "../CalendarButtonStudent/CalendarButtonStudent.jsx";
+import ApiComponent from "../../ApiComponent/ApiComponent.jsx";
 class UserNavbarStudent extends React.Component {
   constructor(props) {
     super(props);
@@ -21,6 +24,9 @@ class UserNavbarStudent extends React.Component {
       fullName: localStorage.fullName,
     });
     this.setState({ current: data.data });
+  }
+  componentDidMount() {
+    ReactDOM.render(<ApiComponent />, document.getElementById("interface"));
   }
   showNav() {
     $("#container").animate({ left: "0" }, 1000);
@@ -40,6 +46,9 @@ class UserNavbarStudent extends React.Component {
       this.setState({ hover: true });
     }
   }
+  showAPI() {
+    ReactDOM.render(<ApiComponent />, document.getElementById("interface"));
+  }
   render() {
     return (
       <div>
@@ -58,13 +67,18 @@ class UserNavbarStudent extends React.Component {
             </center>
           </div>
           <center>
-            <img src="./rbk2.png" id="rbkLogo" />
+            <img
+              src="./rbk2.png"
+              id="rbkLogo"
+              onClick={this.showAPI.bind(this)}
+            />
           </center>
           <div id="buttonsBox">
             <CohortButtonStudent />
             <ChatRoomButton />
-            <ProfileButtonStudent profile={this.state.current} />
             <PinBoardButtonStudent />
+            <CalendarButtonStudent />
+            <ProfileButtonStudent profile={this.state.current} />
             <LogoutButton />
           </div>
         </div>
