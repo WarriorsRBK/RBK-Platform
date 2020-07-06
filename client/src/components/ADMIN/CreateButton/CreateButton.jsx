@@ -13,6 +13,9 @@ class CreateButton extends React.Component {
       children: false,
     };
   }
+  /**
+   * @function showChildren depending on the state it will show or hide some components
+   */
   showChildren() {
     if (!this.state.children) {
       $("#createAccountItem").show(500);
@@ -24,9 +27,15 @@ class CreateButton extends React.Component {
       this.setState({ children: false });
     }
   }
+  /**
+   * @function  openAccount that jsut render a component after a click event
+   */
   openAccount() {
     ReactDOM.render(<CreateAccount />, document.getElementById("interface"));
   }
+  /**
+   * @function  openAccount that jsut render a component after a click event
+   */
   openCohort() {
     ReactDOM.render(<CreateCohort />, document.getElementById("interface"));
   }

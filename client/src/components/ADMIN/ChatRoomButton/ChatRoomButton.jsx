@@ -9,6 +9,9 @@ class ChatRoomButton extends React.Component {
     super(props);
     this.state = {};
   }
+  /**
+   * @function showChatRoom it just render the chat room after a user click
+   */
   showChatRoom() {
     ReactDOM.render(<ChatRoom />, document.getElementById("interface"));
   }

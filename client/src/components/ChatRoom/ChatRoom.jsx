@@ -4,8 +4,10 @@ import io from "socket.io-client";
 import "./ChatRoom.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
-
+import $ from 'jquery'
 const socket = io.connect("http://localhost:3000");
+
+
 
 class Chat extends Component {
   constructor() {
@@ -16,16 +18,23 @@ class Chat extends Component {
       name: localStorage.fullName,
       role: "HIR",
       createdAt: "",
+     
     };
   }
-
+  /**
+   * @function componentDidMount that uses socket to set the new messages to the state
+   */
   componentDidMount() {
     socket.on("chat message", ({ name, role, message, createdAt }) => {
       this.setState({
         chat: [...this.state.chat, { name, role, message, createdAt }],
       });
     });
+    
   }
+  /**
+   * @function componentWillMount that gets the data from  the database and set it to the state
+   */
   componentWillMount() {
     fetch("http://localhost:3000/chatRoomData")
       .then((res) => res.json())
@@ -33,20 +42,40 @@ class Chat extends Component {
       // .then(() => console.log(this.state.data))
       .catch((err) => console.log(err));
   }
+  /**
+   * @function onTextChange that takes an obj containing the sender and the msg and set it to the state along with the date
+   * @param {obj} e
+   */
   onTextChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
     this.setState({ createdAt: new Date().toLocaleString() });
+    socket.on("typing", function (data) {
+      $('.typing').text =
+        "<p><em>" + data + " is typing a message...</em></p>";
+    });
   };
-
+  /**
+   * @function onMessageSubmit that depends on a click it takes the user input along with his name and date and send it to
+   * the chat using socket
+   */
   onMessageSubmit = () => {
     const { name, message, createdAt } = this.state;
     const role = localStorage.role;
     socket.emit("chat message", { name, role, message, createdAt });
     this.setState({ message: "" });
   };
+  /**
+   * @function componentDidUpdate some jquery animation that scrolls to the last added msg
+   */
   componentDidUpdate() {
     $("#chatBoxRoom").scrollTop($("#chatBoxRoom")[0].scrollHeight);
+    
   }
+  /**
+   * @function checkRole that cheks for the user in order to send a different msg with a different color
+   * @param {string} name
+   * @param {string} role
+   */
   checkRole(name, role) {
     if (role === "ADMIN") {
       return <span style={{ color: "red" }}> {name} : </span>;
@@ -56,6 +85,9 @@ class Chat extends Component {
       return <span style={{ color: "green" }}> {name} : </span>;
     }
   }
+  /**
+   * @function renderChat that renders the new added msgs along with the old msgs
+   */
   renderChat() {
     const chat = this.state.chat;
     return chat.map(({ name, role, message, createdAt }, idx) => (
@@ -77,6 +109,9 @@ class Chat extends Component {
       </div>
     ));
   }
+
+
+  
   render() {
     return (
       <div id="chatContain">
@@ -99,14 +134,7 @@ class Chat extends Component {
           {this.renderChat()}
         </div>
         <div style={{ textAlign: "center" }}>
-          {/* <span>name</span>
-          <input
-            name="name"
-            onChange={(e) => this.onTextChange(e)}
-            value={this.state.name}
-          /> */}
-
-          {/* {localStorage.fullName} */}
+          
           <div
             className="input-group mb-3"
             style={{ width: "55%", margin: "0 auto" }}
@@ -132,6 +160,7 @@ class Chat extends Component {
             </div>
           </div>
         </div>
+        <div className='typing'></div>
       </div>
     );
   }
